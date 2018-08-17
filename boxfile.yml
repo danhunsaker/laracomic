@@ -1,0 +1,90 @@
+run.config:
+  engine: php
+  engine.config:
+    runtime: php-7.2
+    webserver: nginx
+    document_root: public
+    extensions:
+      - ctype
+      - mbstring
+      - tokenizer
+      - session
+      - bcmath
+      - zip
+      - dom
+      - xml
+      - iconv
+      - intl
+      - xmlwriter
+      - fileinfo
+      - ftp
+      - curl
+      - pcntl
+      - posix
+      - readline
+      - gd
+      - imagick
+      - pdo
+      - pdo_dblib
+      - pdo_mysql
+      - pdo_odbc
+      - pdo_pgsql
+      - pdo_sqlite
+      - igbinary
+      - redis
+      - sodium
+    post_max_size: '80M'
+    upload_max_filesize: '75M'
+  extra_packages:
+    - ffmpeg3
+    - jpegoptim
+    - optipng
+    # - pngquant
+    - gifsicle
+
+deploy.config:
+  before_live:
+    web.main:
+      - mkdir -p storage/framework/{sessions,cache,views}
+      - php artisan migrate --force
+
+web.main:
+  start:
+    php: start-php
+    nginx: start-nginx
+  writable_dirs:
+    - bootstrap/cache
+  network_dirs:
+    data.storage:
+      - storage
+  log_watch:
+    nginx[access]: /data/var/log/nginx/access.log
+    nginx[error]: /data/var/log/nginx/error.log
+    php[error]: /data/var/log/php/php_error.log
+    php[fpm]: /data/var/log/php/php_fpm.log
+    laravel[error]: /app/storage/logs/laravel.log
+
+worker.main:
+  start:
+    worker: 'php artisan queue:work --queue=default --daemon --tries=5'
+  cron:
+    id: laravel
+    schedule: '* * * * *'
+    command: 'php artisan schedule:run'
+  writable_dirs:
+    - bootstrap/cache
+  network_dirs:
+    data.storage:
+      - storage
+  log_watch:
+    php[error]: /data/var/log/php/php_error.log
+    laravel[error]: /app/storage/logs/laravel.log
+
+data.db:
+  image: nanobox/mysql:5.7
+
+data.redis:
+  image: nanobox/redis:4.0
+
+data.storage:
+  image: nanobox/unfs:0.9
