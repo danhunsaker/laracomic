@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Balping\HashSlug\HasHashSlug;
 
 class Category extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasHashSlug;
 
     /**
      * The attributes that aren't mass assignable.

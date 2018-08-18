@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.1.3",
+        "balping/laravel-hashslug": "^2.1",
         "danhunsaker/laravel-flysystem-others": "^1.3",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",

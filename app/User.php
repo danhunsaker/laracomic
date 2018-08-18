@@ -7,10 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Balping\HashSlug\HasHashSlug;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, SoftDeletes, HasMediaTrait;
+    use Notifiable, SoftDeletes, HasMediaTrait, HasHashSlug;
 
     /**
      * The attributes that are mass assignable.

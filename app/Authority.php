@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Balping\HashSlug\HasHashSlug;
 
 class Authority extends Pivot
 {
+    use HasHashSlug;
+
     /**
      * The attributes that aren't mass assignable.
      *
