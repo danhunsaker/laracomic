@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'connection' => env('DB_CONNECTION', 'mysql'),
+    'connection' => env('SESSION_DRIVER', 'database') == 'database' ? env('DB_CONNECTION', 'mysql') : 'default',
 
     /*
     |--------------------------------------------------------------------------

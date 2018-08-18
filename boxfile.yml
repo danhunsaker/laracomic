@@ -1,9 +1,10 @@
 run.config:
-  engine: php
+  engine: php#feature/wordpress
   engine.config:
     runtime: php-7.2
     webserver: nginx
     document_root: public
+    nginx_try_files: '$uri index.html index.php /index.php?$query_string'
     extensions:
       - ctype
       - mbstring
@@ -68,9 +69,9 @@ worker.main:
   start:
     worker: 'php artisan queue:work --queue=default --daemon --tries=5'
   cron:
-    id: laravel
-    schedule: '* * * * *'
-    command: 'php artisan schedule:run'
+    - id: laravel
+      schedule: '* * * * *'
+      command: 'php artisan schedule:run'
   writable_dirs:
     - bootstrap/cache
   network_dirs:
