@@ -1,6 +1,6 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fontlibrary.org/face/opendyslexic');
 
 // Variables
 @import 'variables';
@@ -11,4 +11,18 @@
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.cookie-consent {
+    background: $purple;
+    color: $body-bg;
+    padding: 1ex;
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.cookie-consent * {
+    margin: 0 1.5em;
 }

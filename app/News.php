@@ -3,12 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use ProAI\Versioning\Versionable;
+use ProAI\Versioning\SoftDeletes;
 use Balping\HashSlug\HasHashSlug;
+use Spatie\Translatable\HasTranslations;
+use Spatie\Tags\HasTags;
+use Spatie\ModelStatus\HasStatuses;
 
 class News extends Model
 {
-    use SoftDeletes, HasHashSlug;
+    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasTags, HasStatuses;
 
     /**
      * The attributes that aren't mass assignable.
@@ -18,6 +22,15 @@ class News extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'comments_enabled'
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -25,6 +38,20 @@ class News extends Model
     protected $casts = [
         'comments_enabled' => 'boolean',
     ];
+
+    public $timestamps = true;
+
+    public $versioned = ['author_id', 'headline', 'article', 'comments_enabled', 'updated_at', 'deleted_at'];
+
+    public $translatable = ['headline', 'article'];
+
+    public function isValidStatus(string $name, ?string $reason = null): bool {
+        if (! in_array($name, ['draft', 'pending', 'scheduled', 'private', 'early_access', 'public', 'flagged', 'blocked'])) {
+            return false;
+        }
+
+        return true;
+    }
 
     public function series() {
         return $this->belongsTo('App\Series');

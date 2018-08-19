@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIssuesTable extends Migration
+class CreateIssuesTables extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,22 @@ class CreateIssuesTable extends Migration
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('latest_version');
             $table->unsignedBigInteger('volume_id');
+            $table->timestamp('created_at');
+        });
+
+        Schema::create('issues_version', function (Blueprint $table) {
+            $table->unsignedBigInteger('ref_id');
+            $table->integer('version');
+            $table->primary(['ref_id', 'version']);
             $table->double('number', 10, 2);
-            $table->string('title', 250);
-            $table->text('description');
-            $table->string('strip_name', 50)->nullable();
+            $table->json('title');
+            $table->json('description');
+            $table->json('strip_name');
             $table->boolean('comments_enabled')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamp('updated_at');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -33,6 +41,7 @@ class CreateIssuesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('issues_version');
         Schema::dropIfExists('issues');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStripsTable extends Migration
+class CreateStripsTables extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,22 @@ class CreateStripsTable extends Migration
     {
         Schema::create('strips', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('latest_version');
             $table->unsignedBigInteger('issue_id');
+            $table->timestamp('created_at');
+        });
+
+        Schema::create('strips_version', function (Blueprint $table) {
+            $table->unsignedBigInteger('ref_id');
+            $table->integer('version');
+            $table->primary(['ref_id', 'version']);
             $table->double('number', 10, 2);
-            $table->string('title', 250);
-            $table->text('description');
-            $table->text('commentary');
+            $table->json('title');
+            $table->json('description');
+            $table->json('commentary');
             $table->boolean('comments_enabled')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamp('updated_at');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -33,6 +41,7 @@ class CreateStripsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('strips_version');
         Schema::dropIfExists('strips');
     }
 }

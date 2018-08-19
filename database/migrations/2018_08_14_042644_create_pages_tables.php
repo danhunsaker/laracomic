@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreatePagesTables extends Migration
 {
     /**
      * Run the migrations.
@@ -15,15 +15,23 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('latest_version');
             $table->unsignedBigInteger('series_id');
+            $table->string('slug', 50);
+            $table->timestamp('created_at');
+        });
+
+        Schema::create('pages_version', function (Blueprint $table) {
+            $table->unsignedBigInteger('ref_id');
+            $table->integer('version');
+            $table->primary(['ref_id', 'version']);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedBigInteger('author_id');
-            $table->string('slug', 50);
-            $table->string('title', 250);
-            $table->text('content');
+            $table->json('title');
+            $table->json('content');
             $table->boolean('comments_enabled')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamp('updated_at');
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
@@ -34,6 +42,7 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('pages_version');
         Schema::dropIfExists('pages');
     }
 }

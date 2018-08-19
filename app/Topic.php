@@ -3,12 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use ProAI\Versioning\Versionable;
+use ProAI\Versioning\SoftDeletes;
 use Balping\HashSlug\HasHashSlug;
+use Spatie\Translatable\HasTranslations;
+use Spatie\Tags\HasTags;
+use Spatie\ModelStatus\HasStatuses;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Topic extends Model
 {
-    use SoftDeletes, HasHashSlug;
+    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasTags, HasStatuses, HasSlug;
 
     /**
      * The attributes that aren't mass assignable.
@@ -17,14 +23,29 @@ class Topic extends Model
      */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'locked' => 'boolean',
-    ];
+    public $timestamps = true;
+
+    public $versioned = ['name', 'description', 'updated_at', 'deleted_at'];
+
+    public $translatable = ['name', 'description'];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(45)
+            ->usingLanguage('en')
+            ->doNotGenerateSlugsOnUpdate();
+    }
+
+    public function isValidStatus(string $name, ?string $reason = null): bool {
+        if (! in_array($name, ['unlocked', 'flagged', 'locked'])) {
+            return false;
+        }
+
+        return true;
+    }
 
     public function category() {
         return $this->belongsTo('App\Category');

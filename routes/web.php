@@ -11,6 +11,12 @@
 |
 */
 
+$domain = app('Pdp\Rules')->resolve(Request::getHost())->getRegistrableDomain() ?:
+          str_replace(['http://', 'https://'], '', config('app.url'));
+config(['app.url' => $domain]);
+
+Route::domain("{series_slug}.{$domain}")->group(base_path('routes/series.php'));
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +24,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('{series_slug}')->group(base_path('routes/series.php'));

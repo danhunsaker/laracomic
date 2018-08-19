@@ -5,10 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Balping\HashSlug\HasHashSlug;
+use Spatie\Translatable\HasTranslations;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Role extends Model
 {
-    use SoftDeletes, HasHashSlug;
+    use SoftDeletes, HasHashSlug, HasTranslations, HasSlug;
 
     /**
      * The attributes that aren't mass assignable.
@@ -30,6 +33,18 @@ class Role extends Model
         'edit_forums' => 'boolean',
         'moderate'    => 'boolean',
     ];
+
+    public $translatable = ['title'];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(45)
+            ->usingLanguage('en')
+            ->doNotGenerateSlugsOnUpdate();
+    }
 
     public function series() {
         return $this->belongsTo('App\Series');

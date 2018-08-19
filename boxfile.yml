@@ -34,16 +34,27 @@ run.config:
       - igbinary
       - redis
       - sodium
+    dev_zend_extensions:
+      add:
+        - xdebug
     post_max_size: '80M'
     upload_max_filesize: '75M'
+  cache_dirs:
+    - node_modules
   extra_packages:
+    - nodejs
     - ffmpeg3
     - jpegoptim
     - optipng
     # - pngquant
     - gifsicle
+  extra_steps:
+    - yarn
+    - yarn dev
 
 deploy.config:
+  extra_steps:
+    - yarn prod
   before_live:
     web.main:
       - mkdir -p storage/framework/{sessions,cache,views}

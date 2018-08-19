@@ -3,14 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use ProAI\Versioning\Versionable;
+use ProAI\Versioning\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Balping\HashSlug\HasHashSlug;
+use Spatie\Translatable\HasTranslations;
+use Spatie\Tags\HasTags;
+use Spatie\ModelStatus\HasStatuses;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Series extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait, HasHashSlug;
+    use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses, HasSlug;
 
     /**
      * The attributes that aren't mass assignable.
@@ -20,6 +26,15 @@ class Series extends Model implements HasMedia
     protected $guarded = [];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'volume_name', 'issue_name', 'strip_name', 'comments_enabled'
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -27,6 +42,12 @@ class Series extends Model implements HasMedia
     protected $casts = [
         'comments_enabled' => 'boolean',
     ];
+
+    public $timestamps = true;
+
+    public $versioned = ['title', 'description', 'volume_name', 'issue_name', 'strip_name', 'comments_enabled', 'updated_at', 'deleted_at'];
+
+    public $translatable = ['title', 'description', 'volume_name', 'issue_name', 'strip_name'];
 
     public function registerMediaCollections() {
         $this->addMediaCollection('banner')
@@ -93,6 +114,24 @@ class Series extends Model implements HasMedia
                 $this->addMediaConversion('cover_tumblr')
                      ->width(500)->height(750);
              });
+    }
+
+    public function isValidStatus(string $name, ?string $reason = null): bool {
+        if (! in_array($name, ['draft', 'pending', 'scheduled', 'private', 'early_access', 'public', 'flagged', 'blocked'])) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            ->slugsShouldBeNoLongerThan(45)
+            ->usingLanguage('en')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     public function volumes() {

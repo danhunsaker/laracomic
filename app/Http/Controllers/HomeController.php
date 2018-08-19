@@ -23,6 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (\Auth::user()->is_super) {
+            return view('dashboard');
+        } elseif (\Auth::user()->is_author) {
+            return view('manage');
+        } else {
+            return view('home');
+        }
     }
 }

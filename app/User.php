@@ -4,14 +4,17 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use ProAI\Versioning\Versionable;
+use ProAI\Versioning\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Balping\HashSlug\HasHashSlug;
+use Spatie\Translatable\HasTranslations;
+use Spatie\ModelStatus\HasStatuses;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, SoftDeletes, HasMediaTrait, HasHashSlug;
+    use Notifiable, Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasStatuses;
 
     /**
      * The attributes that are mass assignable.
@@ -37,18 +40,31 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $casts = [
-        'is_author' => 'boolean',
         'is_super'  => 'boolean',
+        'is_author' => 'boolean',
     ];
 
-    public function registerMediaCollections()
-    {
+    public $timestamps = true;
+
+    public $versioned = ['name', 'is_author', 'owner_id', 'updated_at', 'deleted_at'];
+
+    public $translatable = ['name'];
+
+    public function registerMediaCollections() {
         $this->addMediaCollection('avatar')
              ->registerMediaConversions(function (Media $media) {
                 $this->addMediaConversion('avatar_thumb')
                      ->width(100)
                      ->height(100);
              })->singleFile();
+    }
+
+    public function isValidStatus(string $name, ?string $reason = null): bool {
+        if (! in_array($name, ['registered', 'confirmed', 'verified'])) {
+            return false;
+        }
+
+        return true;
     }
 
     public function owner() {

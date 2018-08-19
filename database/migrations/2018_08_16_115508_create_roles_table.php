@@ -16,7 +16,8 @@ class CreateRolesTable extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('series_id');
-            $table->string('name', 250);
+            $table->string('slug', 50);
+            $table->json('title');
             $table->boolean('admin');
             $table->boolean('edit_comics');
             $table->boolean('edit_pages');
