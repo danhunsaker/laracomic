@@ -17,7 +17,7 @@ class CreateTopicsTables extends Migration
             $table->bigIncrements('id');
             $table->integer('latest_version');
             $table->unsignedBigInteger('category_id');
-            $table->string('slug', 50);
+            $table->string('route', 50);
             $table->timestamp('created_at');
         });
 

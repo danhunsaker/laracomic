@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -23,8 +24,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::bind('series_slug', function ($value) {
-            return \App\Series::where('slug', $value)->first() ?? abort(404);
+        if (! app('migrator')->repositoryExists()) return;
+
+        Route::bind('series', function ($value) {
+            return \App\Series::where('route', $value)->first() ?? abort(404);
         });
 
         parent::boot();

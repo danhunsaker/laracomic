@@ -35,6 +35,18 @@ class Series extends Model implements HasMedia
     ];
 
     /**
+     * The attributes that should have default values.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'volume_name' => '{"en":"volume"}',
+        'issue_name' => '{"en":"issue"}',
+        'strip_name' => '{"en":"strip"}',
+        'comments_enabled' => true,
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -124,14 +136,17 @@ class Series extends Model implements HasMedia
         return true;
     }
 
-    public function getSlugOptions(): SlugOptions
-    {
+    public function getSlugOptions(): SlugOptions {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
+            ->saveSlugsTo('route')
             ->slugsShouldBeNoLongerThan(45)
             ->usingLanguage('en')
             ->doNotGenerateSlugsOnUpdate();
+    }
+
+    public function domains() {
+        return $this->hasMany('App\CustomDomain');
     }
 
     public function volumes() {
@@ -164,5 +179,13 @@ class Series extends Model implements HasMedia
 
     public function canComment() {
         return $this->commentsEnabled;
+    }
+
+    public function getFeed() {
+        return $this->volumes()->currentStatus('public')->get()->map(function ($volume, $key) {
+            return $volume->issues()->currentStatus('public')->get()->map(function ($issue, $key) {
+                return $issue->strips()->currentStatus('public')->get();
+            });
+        });
     }
 }

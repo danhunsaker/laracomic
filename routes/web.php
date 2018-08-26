@@ -1,5 +1,7 @@
 <?php
 
+use App\CustomDomain;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,18 +13,22 @@
 |
 */
 
-$domain = app('Pdp\Rules')->resolve(Request::getHost())->getRegistrableDomain() ?:
-          str_replace(['http://', 'https://'], '', config('app.url'));
-config(['app.url' => $domain]);
-
-Route::domain("{series_slug}.{$domain}")->group(base_path('routes/series.php'));
-
-Route::get('/', function () {
-    return view('welcome');
-});
+$domain = config('app.domain');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('{series_slug}')->group(base_path('routes/series.php'));
+if (Request::getHost() != $domain) {
+    Route::domain("{series}.{$domain}")->namespace('Series')->group(base_path('routes/series.php'));
+} elseif (! is_null($custom = CustomDomain::where(['domain' => Request::getHost()])->first())) {
+    Route::namespace('Series')->middleware("withseries:{$custom->series->route}")->group(base_path('routes/series.php'));
+} else {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('landing');
+
+    Route::prefix('{series}')->namespace('Series')->group(base_path('routes/series.php'));
+}
+
+Route::feeds();

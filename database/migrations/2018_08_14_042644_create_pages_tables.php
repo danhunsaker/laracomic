@@ -17,7 +17,7 @@ class CreatePagesTables extends Migration
             $table->bigIncrements('id');
             $table->integer('latest_version');
             $table->unsignedBigInteger('series_id');
-            $table->string('slug', 50);
+            $table->string('route', 50);
             $table->timestamp('created_at');
         });
 

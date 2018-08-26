@@ -9,8 +9,10 @@ use Balping\HashSlug\HasHashSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Tags\HasTags;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 
-class News extends Model
+class News extends Model implements Feedable
 {
     use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasTags, HasStatuses;
 
@@ -53,6 +55,20 @@ class News extends Model
         return true;
     }
 
+    public function toFeedItem() {
+        return FeedItem::create([
+            'id' => $this->slug,
+            'title' => $this->headline,
+            'summary' => $this->article,
+            'updated' => $this->updated_at,
+            'link' => route('article', [
+                'series' => $this->series->route,
+                'news' => $this->slug,
+            ], false),
+            'author' => $this->author,
+        ]);
+    }
+
     public function series() {
         return $this->belongsTo('App\Series');
     }
@@ -67,5 +83,9 @@ class News extends Model
 
     public function canComment() {
         return empty($this->commentsEnabled) ? $this->series->canComment() : $this->commentsEnabled;
+    }
+
+    public function getFeed($series) {
+        return static::currentStatus('public')->where(['series_id' => $series->id])->get();
     }
 }

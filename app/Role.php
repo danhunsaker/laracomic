@@ -34,13 +34,27 @@ class Role extends Model
         'moderate'    => 'boolean',
     ];
 
+    /**
+     * The attributes that should have default values.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'admin'       => false,
+        'edit_comics' => false,
+        'edit_pages'  => false,
+        'edit_news'   => false,
+        'edit_forums' => false,
+        'moderate'    => false,
+    ];
+
     public $translatable = ['title'];
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
+            ->saveSlugsTo('name')
             ->slugsShouldBeNoLongerThan(45)
             ->usingLanguage('en')
             ->doNotGenerateSlugsOnUpdate();

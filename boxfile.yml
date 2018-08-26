@@ -48,6 +48,9 @@ run.config:
     - optipng
     # - pngquant
     - gifsicle
+  dev_packages:
+    - mysql-client
+    - redis
   extra_steps:
     - yarn
     - yarn dev

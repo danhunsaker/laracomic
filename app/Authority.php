@@ -10,13 +10,20 @@ class Authority extends Pivot
     use HasHashSlug;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'authorables';
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
 
-    public function authorable() {
+    public function authorables() {
         return $this->morphTo();
     }
 

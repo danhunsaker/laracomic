@@ -15,8 +15,8 @@ class CreateAuthorablesTable extends Migration
     {
         Schema::create('authorables', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('authorable_id');
-            $table->string('authorable_type');
+            $table->unsignedBigInteger('authorables_id');
+            $table->string('authorables_type');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('role_id');
             $table->timestamps();

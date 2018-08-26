@@ -16,7 +16,7 @@ class CreateSeriesTables extends Migration
         Schema::create('series', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('latest_version');
-            $table->string('slug', 50)->unique();
+            $table->string('route', 50)->unique();
             $table->timestamp('created_at');
         });
 

@@ -10,6 +10,9 @@
 
     <title>{{ config('app.name', 'LaraComic!') }}</title>
 
+    <!-- Feeds -->
+    @include('feed::links')
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 

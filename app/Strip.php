@@ -11,8 +11,10 @@ use Balping\HashSlug\HasHashSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Tags\HasTags;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 
-class Strip extends Model implements HasMedia
+class Strip extends Model implements HasMedia, Feedable
 {
     use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses;
 
@@ -120,6 +122,22 @@ class Strip extends Model implements HasMedia
         }
 
         return true;
+    }
+
+    public function toFeedItem() {
+        return FeedItem::create([
+            'id' => $this->slug,
+            'title' => $this->title,
+            'summary' => $this->commentary,
+            'updated' => $this->updated_at,
+            'link' => route('strip', [
+                'series' => $this->issue->volume->series->route,
+                'volume' => $this->issue->volume->slug,
+                'issue' => $this->issue->slug,
+                'strip' => $this->slug,
+            ], false),
+            'author' => $this->authors,
+        ]);
     }
 
     public function issue() {

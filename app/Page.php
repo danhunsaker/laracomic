@@ -59,7 +59,7 @@ class Page extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
+            ->saveSlugsTo('route')
             ->slugsShouldBeNoLongerThan(45)
             ->usingLanguage('en')
             ->doNotGenerateSlugsOnUpdate();

@@ -33,7 +33,7 @@ class Topic extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug')
+            ->saveSlugsTo('route')
             ->slugsShouldBeNoLongerThan(45)
             ->usingLanguage('en')
             ->doNotGenerateSlugsOnUpdate();

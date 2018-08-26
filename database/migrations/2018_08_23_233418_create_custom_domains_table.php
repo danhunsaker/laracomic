@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolesTable extends Migration
+class CreateCustomDomainsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,10 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('custom_domains', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('series_id');
-            $table->string('name', 50);
-            $table->json('title');
-            $table->boolean('admin');
-            $table->boolean('edit_comics');
-            $table->boolean('edit_pages');
-            $table->boolean('edit_news');
-            $table->boolean('edit_forums');
-            $table->boolean('moderate');
+            $table->string('domain', 50);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -36,6 +29,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('custom_domains');
     }
 }
