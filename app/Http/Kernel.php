@@ -37,7 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Spatie\Csp\AddCspHeaders::class,
+            // \Spatie\Csp\AddCspHeaders::class,
             'bindings',
             \Spatie\ResponseCache\Middlewares\CacheResponse::class,
         ],

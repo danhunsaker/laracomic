@@ -33,7 +33,9 @@ if (Request::getHost() != $domain) {
         return view('welcome');
     })->name('landing');
 
-    Route::middleware("withseries:{$custom->series->route}")->group(function () {
+    call_user_func(Route::getBindingCallback('series'), $custom->series->route, null);
+
+    Route::middleware("withseries:{$custom->series->route}")->group(function () use ($custom) {
         Auth::routes();
         Route::get('/home', 'HomeController@index')->name('home');
 

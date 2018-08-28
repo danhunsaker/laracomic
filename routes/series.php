@@ -23,7 +23,7 @@ Route::get('news/{news}', 'NewsController@article')->name('article');
 
 Route::get('forum', 'ForumController@forum')->name('forum');
 Route::get('forum/{category}', 'ForumController@category')->name('category');
-Route::get('forum/{topic}', 'ForumController@topic')->name('topic');
-Route::get('forum/{topic}/{post}', 'ForumController@post')->name('post');
+Route::get('forum/{category}/{topic}', 'ForumController@topic')->name('topic');
+Route::get('forum/{category}/{topic}/{post}', 'ForumController@post')->name('post');
 
 Route::get('{page}', 'PageController@page')->name('page');

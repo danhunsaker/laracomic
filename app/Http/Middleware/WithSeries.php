@@ -16,12 +16,12 @@ class WithSeries
     public function handle($request, Closure $next, $series = '')
     {
         if (empty($series)) {
-            $object = \App\Series::where(['route' => str_replace('.'.config('app.domain'), '', $request->getHost())])->first();
-        } else {
-            $object = \App\Series::where(['route' => $series])->first();
+            $series = str_replace('.'.config('app.domain'), '', $request->getHost());
         }
+        $object = \App\Series::where(['route' => $series])->first();
 
-        $request->route()->setParameter('series', $object);
+        $request->route()->parameters = array_prepend(
+            $request->route()->parameters, $object, 'series');
         \View::share('series', $object);
 
         return $next($request);

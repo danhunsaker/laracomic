@@ -29,8 +29,7 @@
                 <a class="navbar-brand" href="{{ route('landing') }}">
                     {{ $root_name ?? config('app.name', 'LaraComic!') }}
                 </a>
-                @if (! empty($series))
-                    <?php URL::defaults(['series' => $series->route]); ?>
+                @if (! empty($series)) <?php URL::defaults(['series' => $series->route]); ?>
                     <span class="navbar-brand">»</span>
                     <a class="navbar-brand" href="{{ route('series') }}">
                         {{ $series->title }}
@@ -43,7 +42,22 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if (! empty($series))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('archive') }}">{{ __('Archive') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('news') }}">{{ __('News') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('forum') }}">{{ __('Forum') }}</a>
+                            </li>
+                            @foreach (App\Page::where(['series_id' => $series->id, 'parent_id' => null])->get() as $page)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('page', ['page' => $page->route]) }}">{{ $page->title }}</a>
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

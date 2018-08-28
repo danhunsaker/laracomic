@@ -24,8 +24,58 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::bind('series', function ($value) {
-            return \App\Series::where('route', $value)->first();
+        Route::bind('series', function ($route) {
+            $series = \App\Series::where('route', $route)->first();
+
+            Route::bind('volume', function ($number) use ($series) {
+                $volume = \App\Volume::where([
+                    'series_id' => $series->id,
+                    'number' => $number,
+                ])->first();
+
+                Route::bind('issue', function ($number) use ($volume) {
+                    $issue = \App\Issue::where([
+                        'volume_id' => $volume->id,
+                        'number' => $number,
+                    ])->first();
+
+                    Route::bind('strip', function ($number) use ($issue) {
+                        return \App\Strip::where([
+                            'issue_id' => $issue->id,
+                            'number' => $number,
+                        ])->first();
+                    });
+
+                    return $issue;
+                });
+
+                return $volume;
+            });
+
+            Route::bind('page', function ($route) use ($series) {
+                return \App\Page::where([
+                    'series_id' => $series->id,
+                    'route' => $route
+                ])->first();
+            });
+
+            Route::bind('category', function ($route) use ($series) {
+                $category = \App\Category::where([
+                    'series_id' => $series->id,
+                    'route' => $route
+                ])->first();
+
+                Route::bind('topic', function ($route) use ($category) {
+                    return \App\Topic::where([
+                        'category_id' => $category->id,
+                        'route' => $route,
+                    ])->first();
+                });
+
+                return $category;
+            });
+
+            return $series;
         });
 
         parent::boot();
