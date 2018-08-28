@@ -20,6 +20,7 @@ class DomainParser extends ServiceProvider
     {
         config(['app.domain' => app('Pdp\Rules')->resolve(Request::getHost())->getRegistrableDomain() ?:
                                 str_replace(['http://', 'https://'], '', config('app.url'))]);
+        config(['session.domain' => config('app.domain')]);
     }
 
     /**

@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -20,3 +19,12 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#vueapp'
 });
+
+$(function() {
+    if (document.getElementById('logout-link') == null) return;
+
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('logout-form').submit();
+    });
+})

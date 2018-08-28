@@ -16,7 +16,7 @@ class LoadFeeds extends ServiceProvider
      */
     public function boot()
     {
-        if (! app('migrator')->repositoryExists()) return;
+        if (! app('migrator')->repositoryExists() || is_null(app('migrator')->getRepository()->getLastBatchNumber())) return;
 
         if (! is_null($custom = \App\CustomDomain::where(['domain' => Request::getHost()])->first())) {
             $this->addSeriesFeeds($custom->series);

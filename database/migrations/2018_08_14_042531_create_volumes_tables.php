@@ -27,8 +27,8 @@ class CreateVolumesTables extends Migration
             $table->double('number', 10, 2);
             $table->json('title');
             $table->json('description');
-            $table->json('issue_name');
-            $table->json('strip_name');
+            $table->json('issue_name')->nullable();
+            $table->json('strip_name')->nullable();
             $table->boolean('comments_enabled')->nullable();
             $table->timestamp('updated_at');
             $table->timestamp('deleted_at')->nullable();

@@ -5,14 +5,14 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\User;
 
-class CreateSuper extends Command
+class CreateAuthor extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'laracomic:create-super
+    protected $signature = 'laracomic:create-author
                             {--email= : The email address of the user to create}
                             {name? : The name of the user to create}';
 
@@ -21,7 +21,7 @@ class CreateSuper extends Command
      *
      * @var string
      */
-    protected $description = 'Create a super user account, with full control over the site, but no authoring abilities';
+    protected $description = 'Create an author account, with full authoring abilities, but no control over the site itself';
 
     /**
      * Create a new command instance.
@@ -40,10 +40,10 @@ class CreateSuper extends Command
      */
     public function handle()
     {
-        $name = $this->argument('name') ?: $this->ask('Super user\'s name');
-        $email = $this->option('email') ?: $this->ask('Super user\'s email address');
-        $pass = $this->secret('Super user\'s password');
-        $verify = $this->secret('Super user\'s password again');
+        $name = $this->argument('name') ?: $this->ask('Author\'s name');
+        $email = $this->option('email') ?: $this->ask('Author\'s email address');
+        $pass = $this->secret('Author\'s password');
+        $verify = $this->secret('Author\'s password again');
 
         if (empty($name) || empty($email) || empty($pass) || $pass != $verify) {
             $this->error('Invalid input; trying again.');
@@ -51,10 +51,10 @@ class CreateSuper extends Command
         }
 
         $user = User::create(['name' => $name, 'email' => $email, 'password' => \Hash::make($pass)]);
-        $user->is_super = true;
-        $user->is_author = false;
+        $user->is_super = false;
+        $user->is_author = true;
         $user->save();
 
-        $this->line('Super user created! You can now log in.');
+        $this->line('Author created! You can now log in.');
     }
 }

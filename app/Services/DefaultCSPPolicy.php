@@ -12,6 +12,7 @@ class DefaultCSPPolicy extends Basic
         parent::configure();
 
         $this->addDirective(Directive::STYLE, 'fontlibrary.org')
+             ->addDirective(Directive::STYLE, 'sha256-biLFinpqYMtWHmXfkA1BPeCY0/fNt46SAZ+BBk5YUog=')
              ->addDirective(Directive::FONT, 'fonts.gstatic.com')
              ->addDirective(Directive::FONT, 'fontlibrary.org');
     }

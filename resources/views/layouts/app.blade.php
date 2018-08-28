@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'LaraComic!') }}</title>
+    <title>{{ (empty($title) ? '' : $title . ' | ') . (empty($series) ? ($root_name ?? config('app.name', 'LaraComic!')) : $series->title) }}</title>
 
     <!-- Feeds -->
     @include('feed::links')
@@ -26,9 +26,16 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'LaraComic!') }}
+                <a class="navbar-brand" href="{{ route('landing') }}">
+                    {{ $root_name ?? config('app.name', 'LaraComic!') }}
                 </a>
+                @if (! empty($series))
+                    <?php URL::defaults(['series' => $series->route]); ?>
+                    <span class="navbar-brand">»</span>
+                    <a class="navbar-brand" href="{{ route('series') }}">
+                        {{ $series->title }}
+                    </a>
+                @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -56,9 +63,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                        {{ __('Dashboard') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}" id="logout-link">
                                         {{ __('Logout') }}
                                     </a>
 

@@ -24,10 +24,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (! app('migrator')->repositoryExists()) return;
-
         Route::bind('series', function ($value) {
-            return \App\Series::where('route', $value)->first() ?? abort(404);
+            return \App\Series::where('route', $value)->first();
         });
 
         parent::boot();
