@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Balping\HashSlug\HasHashSlug;
 
-class Authority extends Pivot
+class Authority extends MorphPivot
 {
     use HasHashSlug;
 

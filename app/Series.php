@@ -182,8 +182,8 @@ class Series extends Model implements HasMedia
     }
 
     public function getFeed() {
-        return $this->volumes()->currentStatus('public')->get()->map(function ($volume, $key) {
-            return $volume->issues()->currentStatus('public')->get()->map(function ($issue, $key) {
+        return $this->volumes()->currentStatus('public')->get()->flatMap(function ($volume, $key) {
+            return $volume->issues()->currentStatus('public')->get()->flatMap(function ($issue, $key) {
                 return $issue->strips()->currentStatus('public')->get();
             });
         });

@@ -25,7 +25,7 @@ class StripSeeder extends Seeder
                 'title' => 'OHAI',
                 'description' => 'This should have an image, but I\'m too lazy...',
                 'commentary' => 'Yup! It\'s still a test!',
-            ])->id,
+            ])->setStatus('public', 'seed data')->id,
             'authorables_type' => 'strip',
             'role_id' => Role::where(['name' => 'creator'])->first()->id,
             'user_id' => User::where(['is_author' => true])->first()->id,

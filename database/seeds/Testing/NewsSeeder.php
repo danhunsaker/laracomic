@@ -21,6 +21,6 @@ class NewsSeeder extends Seeder
             'author_id' => User::where(['is_author' => true])->first()->id,
             'headline' => 'News Post?',
             'article' => 'Nope, just a test...',
-        ]);
+        ])->setStatus('public', 'seed data');
     }
 }

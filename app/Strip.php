@@ -126,16 +126,20 @@ class Strip extends Model implements HasMedia, Feedable
 
     public function toFeedItem() {
         return FeedItem::create([
-            'id' => $this->slug,
+            'id' => $this->slug(),
             'title' => $this->title,
             'summary' => $this->commentary,
             'updated' => $this->updated_at,
-            'link' => route('strip', [
-                'series' => $this->issue->volume->series->route,
-                'volume' => $this->issue->volume->slug,
-                'issue' => $this->issue->slug,
-                'strip' => $this->slug,
-            ], false),
+            'link' => trim(str_replace(
+                ["series={$this->issue->volume->series->route}", '?&'],
+                ['', '?'],
+                route('strip', [
+                    'series' => $this->issue->volume->series->route,
+                    'volume' => $this->issue->volume->number,
+                    'issue' => $this->issue->number,
+                    'strip' => $this->number,
+                ], false)
+            ), '?'),
             'author' => $this->authors,
         ]);
     }

@@ -24,7 +24,7 @@ class VolumeSeeder extends Seeder
                 'number' => -1.5,
                 'title' => 'Before The Beginning',
                 'description' => 'Another test!',
-            ])->id,
+            ])->setStatus('public', 'seed data')->id,
             'authorables_type' => 'volume',
             'role_id' => Role::where(['name' => 'creator'])->first()->id,
             'user_id' => User::where(['is_author' => true])->first()->id,

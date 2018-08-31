@@ -21,6 +21,6 @@ class PageSeeder extends Seeder
             'author_id' => User::where(['is_author' => true])->first()->id,
             'title' => 'About',
             'content' => 'Yeah, just another test, here...',
-        ]);
+        ])->setStatus('public', 'seed data');
     }
 }

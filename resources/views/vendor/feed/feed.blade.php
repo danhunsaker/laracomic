@@ -17,9 +17,11 @@
             <title><![CDATA[{{ $item->title }}]]></title>
             <link rel="alternate" href="{{ url($item->link) }}" />
             <id>{{ url($item->id) }}</id>
-            <author>
-                <name> <![CDATA[{{ $item->author }}]]></name>
-            </author>
+            @foreach (collect()->wrap($item->author) as $author)
+                <author>
+                    <name><![CDATA[{{ $author->name }}]]></name>
+                </author>
+            @endforeach
             <summary type="html">
                 <![CDATA[{!! $item->summary !!}]]>
             </summary>

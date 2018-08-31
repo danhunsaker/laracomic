@@ -14,6 +14,6 @@ class SeriesSeeder extends Seeder
      */
     public function run()
     {
-        Series::create(['title' => 'Walnuts!', 'description' => 'Simply a test...']);
+        Series::create(['title' => 'Walnuts!', 'description' => 'Simply a test...'])->setStatus('public', 'seed data');
     }
 }

@@ -24,7 +24,7 @@ class IssueSeeder extends Seeder
                 'number' => 0,
                 'title' => 'Introduction',
                 'description' => 'MOAR test!',
-            ])->id,
+            ])->setStatus('public', 'seed data')->id,
             'authorables_type' => 'issue',
             'role_id' => Role::where(['name' => 'creator'])->first()->id,
             'user_id' => User::where(['is_author' => true])->first()->id,

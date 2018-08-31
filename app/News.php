@@ -57,14 +57,18 @@ class News extends Model implements Feedable
 
     public function toFeedItem() {
         return FeedItem::create([
-            'id' => $this->slug,
+            'id' => $this->slug(),
             'title' => $this->headline,
             'summary' => $this->article,
             'updated' => $this->updated_at,
-            'link' => route('article', [
-                'series' => $this->series->route,
-                'news' => $this->slug,
-            ], false),
+            'link' => trim(str_replace(
+                ["series={$this->series->route}", '?&'],
+                ['', '?'],
+                route('article', [
+                    'series' => $this->series->route,
+                    'news' => $this->slug(),
+                ], false)
+            ), '?'),
             'author' => $this->author,
         ]);
     }
