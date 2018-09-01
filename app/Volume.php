@@ -143,18 +143,18 @@ class Volume extends Model implements HasMedia
     }
 
     public function getIssueNameAttribute($value) {
-        return $value ?: $this->series->issueName;
+        return $value ?: $this->series->issue_name;
     }
 
     public function setIssueNameAttribute($value) {
-        $this->attributes['issue_name'] = ($value == $this->series->issueName) ? null : $this->attributes['issue_name'] = $value;
+        $this->attributes['issue_name'] = ($value == $this->series->issue_name) ? null : $this->attributes['issue_name'] = $value;
     }
 
     public function getStripNameAttribute($value) {
-        return $value ?: $this->series->stripName;
+        return $value ?: $this->series->strip_name;
     }
 
     public function setStripNameAttribute($value) {
-        $this->attributes['strip_name'] = ($value == $this->series->stripName) ? null : $this->attributes['strip_name'] = $value;
+        $this->attributes['strip_name'] = ($value == $this->series->strip_name) ? null : $this->attributes['strip_name'] = $value;
     }
 }

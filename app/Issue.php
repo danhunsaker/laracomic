@@ -143,10 +143,10 @@ class Issue extends Model implements HasMedia
     }
 
     public function getStripNameAttribute($value) {
-        return $value ?: $this->volume->stripName;
+        return $value ?: $this->volume->strip_name;
     }
 
     public function setStripNameAttribute($value) {
-        $this->attributes['strip_name'] = ($value == $this->volume->stripName) ? null : $this->attributes['strip_name'] = $value;
+        $this->attributes['strip_name'] = ($value == $this->volume->strip_name) ? null : $this->attributes['strip_name'] = $value;
     }
 }

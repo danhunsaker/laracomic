@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-@if ($series->volumes->count() == 1)
-    @include('series.volume', ['series' => $series, 'volume' => $series->volumes->first()])
+@if ($volume->issues->count() == 1)
+    @include('series.issue', ['series' => $series, 'volume' => $volume, 'issue' => $volume->issues->first()])
 @else
     <div class="container">
-        @foreach ($series->volumes as $volume)
+        @foreach ($volume->issues as $issue)
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ route('volume', ['series' => $series->route, 'volume' => $volume->number]) }}">
-                                {{ $series->title }} – {{ title_case($series->volume_name) }} {{ $volume->number }}: {{ $volume->title }}
+                            <a href="{{ route('issue', ['series' => $series->route, 'volume' => $volume->number, 'issue' => $issue->number]) }}">
+                                {{ $series->title }} – {{ title_case($volume->issue_name) }} {{ $issue->number }}: {{ $issue->title }}
                             </a>
                         </div>
 
@@ -22,7 +22,7 @@
                                 </div>
                             @endif
 
-                            {{ $volume->description }}
+                            {{ $issue->description }}
                         </div>
                     </div>
                 </div>
