@@ -1,23 +1,15 @@
 @extends('layouts.app')
 
+@include('layouts.sidebar.series', ['series' => $series])
+
+@include('series.cards.article', ['series' => $series, 'news' => $news, 'single' => true])
+
 @section('content')
-<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col">
             <div class="card">
-                <div class="card-header">{{ $news->headline }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ $news->article }}
-                </div>
+                @yield("article-card-{$news->id}")
             </div>
         </div>
     </div>
-</div>
 @endsection

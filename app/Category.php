@@ -24,7 +24,7 @@ class Category extends Model
 
     public $timestamps = true;
 
-    public $versioned = ['parent_id', 'name', 'description', 'updated_at', 'deleted_at'];
+    public $versioned = ['name', 'description', 'updated_at', 'deleted_at'];
 
     public $translatable = ['name', 'description'];
 

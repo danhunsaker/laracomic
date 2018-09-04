@@ -1,15 +1,11 @@
-@extends('layouts.app')
-
-@include('layouts.sidebar.series', ['series' => $series])
-
-@section('content')
+@section('sidebar')
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
-                <div class="card-header">{{ $page->title }}</div>
+                <div class="card-header">Welcome to LaraComic!</div>
 
                 <div class="card-body">
-                    {{ $page->content }}
+                    LaraComic! is an open source content management system specifically designed for webcomics.
                 </div>
             </div>
         </div>

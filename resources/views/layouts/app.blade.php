@@ -25,16 +25,13 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ route('landing') }}">
-                    {{ $root_name ?? config('app.name', 'LaraComic!') }}
-                </a>
-                @if (! empty($series)) <?php URL::defaults(['series' => $series->route]); ?>
-                    <span class="navbar-brand">»</span>
-                    <a class="navbar-brand" href="{{ route('series') }}">
-                        {{ $series->title }}
-                    </a>
-                @endif
+            <div class="container-fluid">
+                <span class="navbar-brand">
+                    <a href="{{ route('landing') }}">{{ $root_name ?? config('app.name', 'LaraComic!') }}</a>
+                    @if (! empty($series)) <?php URL::defaults(['series' => $series->route]); ?>
+                        » <a href="{{ route('series') }}">{{ $series->title }}</a>
+                    @endif
+                </span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -96,8 +93,26 @@
             </div>
         </nav>
 
+        @include('layouts.sidebar.main')
+
         <main class="py-4">
-            @yield('content')
+            <div class="container-fluid">
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <div class="row justify-content-center">
+                    <div class="col">
+                        @yield('content')
+                    </div>
+
+                    <div class="col-md-4">
+                        @yield('sidebar')
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>

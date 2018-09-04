@@ -17,6 +17,7 @@ class CreateCategoriesTables extends Migration
             $table->bigIncrements('id');
             $table->integer('latest_version');
             $table->unsignedBigInteger('series_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('route', 50);
             $table->timestamp('created_at');
         });
@@ -25,7 +26,6 @@ class CreateCategoriesTables extends Migration
             $table->unsignedBigInteger('ref_id');
             $table->integer('version');
             $table->primary(['ref_id', 'version']);
-            $table->unsignedBigInteger('parent_id')->nullable();
             $table->json('name');
             $table->json('description');
             $table->timestamp('updated_at');

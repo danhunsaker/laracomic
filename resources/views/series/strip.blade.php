@@ -1,31 +1,15 @@
 @extends('layouts.app')
 
+@include('layouts.sidebar.series', ['series' => $series])
+
+@include('series.cards.strip', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'strip' => $strip, 'single' => true])
+
 @section('content')
-<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col">
             <div class="card">
-                <div class="card-header">
-                    {{ $series->title }} – {{ title_case($strip->issue->strip_name) }} {{ $strip->number }}: {{ $strip->title }}
-                </div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <div class="strip-image">
-                        <img src="" alt="{{ $strip->description }}">
-                    </div>
-
-                    <p>
-                        {{ $strip->commentary }}
-                    </p>
-                </div>
+                @yield("strip-card-{$strip->id}")
             </div>
         </div>
     </div>
-</div>
 @endsection

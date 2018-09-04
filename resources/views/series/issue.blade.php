@@ -1,29 +1,33 @@
 @extends('layouts.app')
 
+@include('layouts.sidebar.series', ['series' => $series])
+
+@include('series.cards.issue', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'single' => true])
+
 @section('content')
-<div class="container">
-    @foreach ($issue->strips as $strip)
+    @if (isset($issue_collapsed) && $issue_collapsed && isset($volume_collapsed) && $volume_collapsed)
+    @else
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col">
                 <div class="card">
-                    <div class="card-header">
-                        <a href="{{ route('strip', ['series' => $series->route, 'volume' => $volume->number, 'issue' => $issue->number, 'strip' => $strip->number]) }}">
-                            {{ $series->title }} – {{ title_case($issue->strip_name) }} {{ $strip->number }}: {{ $strip->title }}
-                        </a>
-                    </div>
+                    @if (isset($issue_collapsed) && $issue_collapsed)
+                        @yield("volume-card-{$volume->id}")
+                    @else
+                        @yield("issue-card-{$issue->id}")
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ $strip->description }}
-                    </div>
+    @foreach ($issue->strips as $strip)
+        @include('series.cards.strip', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'strip' => $strip, 'single' => false])
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="card">
+                    @yield("strip-card-{$strip->id}")
                 </div>
             </div>
         </div>
     @endforeach
-</div>
 @endsection

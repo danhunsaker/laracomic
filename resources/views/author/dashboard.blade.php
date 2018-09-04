@@ -1,23 +1,19 @@
 @extends('layouts.app')
 
+@if (isset($series))
+    @include('layouts.sidebar.series', ['series' => $series])
+@endif
+
 @section('content')
-<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col">
             <div class="card">
                 <div class="card-header">{{ __('Author Dashboard') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
                     {{ __('Welcome, Author!') }}
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

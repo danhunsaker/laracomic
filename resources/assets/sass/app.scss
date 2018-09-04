@@ -26,3 +26,13 @@
 .cookie-consent * {
     margin: 0 1.5em;
 }
+
+.card {
+    margin-bottom: 30px;
+}
+
+.navbar-light .navbar-brand a,
+.navbar-light .navbar-brand:focus a,
+.navbar-light .navbar-brand:hover a {
+    color: rgba(0,0,0,.9);
+}

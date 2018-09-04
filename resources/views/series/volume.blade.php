@@ -1,33 +1,33 @@
 @extends('layouts.app')
 
+@include('layouts.sidebar.series', ['series' => $series])
+
+@include('series.cards.volume', ['series' => $series, 'volume' => $volume, 'single' => true])
+
 @section('content')
 @if ($volume->issues->count() == 1)
-    @include('series.issue', ['series' => $series, 'volume' => $volume, 'issue' => $volume->issues->first()])
+    @include('series.issue', ['series' => $series, 'volume' => $volume, 'issue' => $volume->issues->first(), 'volume_collapsed' => $volume_collapsed ?? false, 'issue_collapsed' => true])
 @else
-    <div class="container">
-        @foreach ($volume->issues as $issue)
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <a href="{{ route('issue', ['series' => $series->route, 'volume' => $volume->number, 'issue' => $issue->number]) }}">
-                                {{ $series->title }} – {{ title_case($volume->issue_name) }} {{ $issue->number }}: {{ $issue->title }}
-                            </a>
-                        </div>
-
-                        <div class="card-body">
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-
-                            {{ $issue->description }}
-                        </div>
-                    </div>
+    @if (isset($volume_collapsed) && $volume_collapsed)
+    @else
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="card">
+                    @yield("volume-card-{$volume->id}")
                 </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+    @endif
+
+    @foreach ($volume->issues as $issue)
+        @include('series.cards.issue', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'single' => false])
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="card">
+                    @yield("issue-card-{$issue->id}")
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endif
 @endsection
