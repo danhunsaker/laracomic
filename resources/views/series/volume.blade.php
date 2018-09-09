@@ -2,6 +2,8 @@
 
 @include('layouts.sidebar.series', ['series' => $series])
 
+@include('series.dynamics', ['current' => $volume])
+
 @include('series.cards.volume', ['series' => $series, 'volume' => $volume, 'single' => true])
 
 @section('content')
@@ -19,7 +21,9 @@
         </div>
     @endif
 
-    @foreach ($volume->issues as $issue)
+    {{ ($pager = $volume->issues()->paginate(15))->links() }}
+
+    @foreach ($pager as $issue)
         @include('series.cards.issue', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'single' => false])
         <div class="row justify-content-center">
             <div class="col">
@@ -29,5 +33,7 @@
             </div>
         </div>
     @endforeach
+
+    {{ $pager->links() }}
 @endif
 @endsection

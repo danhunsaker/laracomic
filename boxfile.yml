@@ -23,6 +23,7 @@ run.config:
       - pcntl
       - posix
       - readline
+      - exif
       - gd
       - imagick
       - pdo

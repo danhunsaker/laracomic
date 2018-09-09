@@ -4,13 +4,17 @@
 
 @include('series.cards.strip', [
     'series' => $series,
-    'volume' => ($volume = $series->volumes()->latest()->first()),
-    'issue' => ($issue = $volume->issues()->latest()->first()),
-    'strip' => ($strip = $issue->strips()->latest()->first()),
+    'volume' => ($volume = $series->volumes->last()),
+    'issue' => ($issue = $volume->issues->last()),
+    'strip' => ($strip = $issue->strips->last()),
     'single' => true,
 ])
 
+@include('series.dynamics', ['current' => $strip])
+
 @section('content')
+    @yield("strip-pager-{$strip->id}")
+
     <div class="row justify-content-center">
         <div class="col">
             <div class="card">
@@ -19,7 +23,9 @@
         </div>
     </div>
 
-    @foreach ($series->news as $news)
+    @yield("strip-pager-{$strip->id}")
+
+    @foreach ($series->news()->latest()->take(3)->get() as $news)
         @include('series.cards.article', ['series' => $series, 'news' => $news, 'single' => false])
         <div class="row justify-content-center">
             <div class="col">

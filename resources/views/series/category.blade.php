@@ -46,7 +46,9 @@
         </div>
     </div>
 
-    @foreach ($category->topics()->latest()->get() as $topic)
+    {{ ($pager = $category->topics()->latest()->paginate(5))->links() }}
+
+    @foreach ($pager as $topic)
         @include('series.cards.topic', ['series' => $series, 'category' => $category, 'topic' => $topic, 'single' => false])
         <div class="row justify-content-center">
             <div class="col">
@@ -56,4 +58,6 @@
             </div>
         </div>
     @endforeach
+
+    {{ $pager->links() }}
 @endsection

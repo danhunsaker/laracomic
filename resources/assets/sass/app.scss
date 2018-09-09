@@ -1,17 +1,13 @@
 
 // Fonts
 @import url('https://fontlibrary.org/face/opendyslexic');
+$font-family-sans-serif: "OpenDyslexic", sans-serif;
 
-// Variables
-@import 'variables';
+// // Variables
+// @import 'cyborg/variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
 
 .cookie-consent {
     background: $purple;
@@ -28,11 +24,63 @@
 }
 
 .card {
-    margin-bottom: 30px;
+    margin-bottom: 1rem;
 }
 
-.navbar-light .navbar-brand a,
-.navbar-light .navbar-brand:focus a,
-.navbar-light .navbar-brand:hover a {
-    color: rgba(0,0,0,.9);
+.strip-image {
+    margin-bottom: 1rem;
+}
+
+$nav-bg: mix(opacify($card-cap-bg, 1), $card-bg, opacity($card-cap-bg) * 100);
+
+.navbar-laravel {
+    background-color: $nav-bg;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.navbar-laravel .navbar-brand a,
+.navbar-laravel .navbar-brand:focus a {
+    color: color-yiq($nav-bg);
+}
+
+.navbar-laravel .navbar-nav .nav-link,
+.navbar-laravel .navbar-nav:focus .nav-link {
+    color: rgba(color-yiq($nav-bg),.7);
+}
+
+.navbar-laravel .navbar-brand a:hover,
+.navbar-laravel .navbar-nav .nav-link:hover {
+    color: $link-hover-color;
+}
+
+.pagination {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    width: -webkit-fill-available;
+    width: -moz-available;
+}
+
+.pagination .page-item {
+    width: -webkit-fill-available;
+    width: -moz-available;
+    text-align: center;
+}
+
+#banner {
+    background-color: $nav-bg;
+    display: block;
+}
+
+#banner img {
+    margin: 0 auto;
+    max-width: 1750px;
+    max-height: 250px;
+    display: block;
+}
+
+@media print {
+    #banner {
+        display: none;
+    }
 }

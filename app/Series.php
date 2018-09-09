@@ -85,7 +85,8 @@ class Series extends Model implements HasMedia
                      ->width(1024)->height(1024)
                      ->withResponsiveImages();
                 $this->addMediaConversion('logo_favicon')
-                     ->width(128)->height(128);
+                     ->width(128)->height(128)
+                     ->keepOriginalImageFormat();
                 $this->addMediaConversion('logo_fb')
                      ->width(180)->height(180);
                 $this->addMediaConversion('logo_twitter')
@@ -150,7 +151,15 @@ class Series extends Model implements HasMedia
     }
 
     public function volumes() {
-        return $this->hasMany('App\Volume');
+        return $this->hasMany('App\Volume')->orderBy('number', 'asc');
+    }
+
+    public function strips() {
+        return $this->volumes->flatMap(function ($volume, $key) {
+            return $volume->issues->flatMap(function ($issue, $key) {
+                return $issue->strips;
+            });
+        });
     }
 
     public function authors() {
@@ -187,5 +196,9 @@ class Series extends Model implements HasMedia
                 return $issue->strips()->currentStatus('public')->get();
             });
         });
+    }
+
+    public function image($collection) {
+        return collect()->wrap($this->getFirstMedia($collection))->filter()->first();
     }
 }

@@ -14,6 +14,9 @@ class SeriesSeeder extends Seeder
      */
     public function run()
     {
-        Series::create(['title' => 'Walnuts!', 'description' => 'Simply a test...'])->setStatus('public', 'seed data');
+        $series = Series::create(['title' => 'Walnuts!', 'description' => 'Simply a test...'])->setStatus('public', 'seed data');
+
+        $series->addMedia(__DIR__ . '/walnuts-logo.png')->preservingOriginal()->toMediaCollection('logo');
+        $series->addMedia(__DIR__ . '/walnuts-can-control-appetite.jpg')->preservingOriginal()->toMediaCollection('banner');
     }
 }

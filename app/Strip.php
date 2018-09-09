@@ -73,7 +73,8 @@ class Strip extends Model implements HasMedia, Feedable
                      ->width(1024)->height(1024)
                      ->withResponsiveImages();
                 $this->addMediaConversion('logo_favicon')
-                     ->width(128)->height(128);
+                     ->width(128)->height(128)
+                     ->keepOriginalImageFormat();
                 $this->addMediaConversion('logo_fb')
                      ->width(180)->height(180);
                 $this->addMediaConversion('logo_twitter')
@@ -158,5 +159,9 @@ class Strip extends Model implements HasMedia, Feedable
 
     public function canComment() {
         return empty($this->commentsEnabled) ? $this->issue->canComment() : $this->commentsEnabled;
+    }
+
+    public function image($collection) {
+        return collect()->wrap($this->issue->image($collection))->prepend($this->getFirstMedia($collection))->filter()->first();
     }
 }

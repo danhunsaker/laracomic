@@ -13,7 +13,10 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next' => 'Next &raquo;',
+    'first' => '&laquo; First',
+    'previous' => '&lsaquo; Previous',
+    'random' => '&larrlp; Random &rarrlp;',
+    'next' => 'Next &rsaquo;',
+    'last' => 'Last &raquo;',
 
 ];

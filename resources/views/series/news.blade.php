@@ -3,7 +3,9 @@
 @include('layouts.sidebar.series', ['series' => $series])
 
 @section('content')
-    @foreach ($series->news as $news)
+    {{ ($pager = $series->news()->paginate(5))->links() }}
+
+    @foreach ($pager as $news)
         @include('series.cards.article', ['series' => $series, 'news' => $news, 'single' => false])
         <div class="row justify-content-center">
             <div class="col">
@@ -13,4 +15,6 @@
             </div>
         </div>
     @endforeach
+
+    {{ $pager->links() }}
 @endsection

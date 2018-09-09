@@ -9,6 +9,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ (empty($title) ? '' : $title . ' | ') . (empty($series) ? ($root_name ?? config('app.name', 'LaraComic!')) : $series->title) }}</title>
+    @if (! empty($series))
+        <?php URL::defaults(['series' => $series->route]); ?>
+        @include('series.dynamics', ['current' => $series])
+        @yield('favicon')
+    @endif
 
     <!-- Feeds -->
     @include('feed::links')
@@ -20,15 +25,20 @@
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/opendyslexic" type="text/css"/>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dark.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        @if (! empty($series))
+            <a id="banner" href="{{ route('series') }}">
+                @yield('banner')
+            </a>
+        @endif
+        <nav class="navbar navbar-expand-md navbar-laravel">
             <div class="container-fluid">
                 <span class="navbar-brand">
                     <a href="{{ route('landing') }}">{{ $root_name ?? config('app.name', 'LaraComic!') }}</a>
-                    @if (! empty($series)) <?php URL::defaults(['series' => $series->route]); ?>
+                    @if (! empty($series))
                         » <a href="{{ route('series') }}">{{ $series->title }}</a>
                     @endif
                 </span>

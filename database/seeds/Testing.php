@@ -13,7 +13,7 @@ class Testing extends Seeder
     {
         $this->call(DatabaseSeeder::class);
 
-        foreach (glob(__DIR__ . '/Testing/*') as $file) {
+        foreach (glob(__DIR__ . '/Testing/*.php') as $file) {
             require_once($file);
         }
 

@@ -12,7 +12,9 @@
         </div>
     </div>
 
-    @foreach ($topic->posts as $post)
+    {{ ($pager = $topic->posts()->paginate(15))->links() }}
+
+    @foreach ($pager as $post)
         @continue(! empty($post->parent))
         @include('series.cards.post', ['series' => $series, 'category' => $category, 'topic' => $topic, 'post' => $post, 'single' => false])
         <div class="row justify-content-center">
@@ -51,4 +53,6 @@
             </div>
         </div>
     @endforeach
+
+    {{ $pager->links() }}
 @endsection

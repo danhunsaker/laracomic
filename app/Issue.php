@@ -71,7 +71,8 @@ class Issue extends Model implements HasMedia
                      ->width(1024)->height(1024)
                      ->withResponsiveImages();
                 $this->addMediaConversion('logo_favicon')
-                     ->width(128)->height(128);
+                     ->width(128)->height(128)
+                     ->keepOriginalImageFormat();
                 $this->addMediaConversion('logo_fb')
                      ->width(180)->height(180);
                 $this->addMediaConversion('logo_twitter')
@@ -127,7 +128,7 @@ class Issue extends Model implements HasMedia
     }
 
     public function strips() {
-        return $this->hasMany('App\Strip');
+        return $this->hasMany('App\Strip')->orderBy('number', 'asc');
     }
 
     public function authors() {
@@ -148,5 +149,9 @@ class Issue extends Model implements HasMedia
 
     public function setStripNameAttribute($value) {
         $this->attributes['strip_name'] = ($value == $this->volume->strip_name) ? null : $this->attributes['strip_name'] = $value;
+    }
+
+    public function image($collection) {
+        return collect()->wrap($this->volume->image($collection))->prepend($this->getFirstMedia($collection))->filter()->first();
     }
 }
