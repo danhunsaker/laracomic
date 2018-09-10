@@ -187,7 +187,7 @@ class Series extends Model implements HasMedia
     }
 
     public function canComment() {
-        return $this->commentsEnabled;
+        return $this->comments_enabled;
     }
 
     public function getFeed() {

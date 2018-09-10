@@ -140,7 +140,7 @@ class Issue extends Model implements HasMedia
     }
 
     public function canComment() {
-        return empty($this->commentsEnabled) ? $this->volume->canComment() : $this->commentsEnabled;
+        return empty($this->comments_enabled) ? $this->volume->canComment() : $this->comments_enabled;
     }
 
     public function getStripNameAttribute($value) {

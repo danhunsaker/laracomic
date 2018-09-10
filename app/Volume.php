@@ -140,7 +140,7 @@ class Volume extends Model implements HasMedia
     }
 
     public function canComment() {
-        return empty($this->commentsEnabled) ? $this->series->canComment() : $this->commentsEnabled;
+        return empty($this->comments_enabled) ? $this->series->canComment() : $this->comments_enabled;
     }
 
     public function getIssueNameAttribute($value) {

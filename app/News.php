@@ -86,7 +86,7 @@ class News extends Model implements Feedable
     }
 
     public function canComment() {
-        return empty($this->commentsEnabled) ? $this->series->canComment() : $this->commentsEnabled;
+        return empty($this->comments_enabled) ? $this->series->canComment() : $this->comments_enabled;
     }
 
     public function getFeed($series) {

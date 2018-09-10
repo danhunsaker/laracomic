@@ -86,6 +86,6 @@ class Page extends Model
     }
 
     public function canComment() {
-        return empty($this->commentsEnabled) ? (empty($this->parent) ? $this->series->canComment() : $this->parent->canComment()) : $this->commentsEnabled;
+        return empty($this->comments_enabled) ? (empty($this->parent) ? $this->series->canComment() : $this->parent->canComment()) : $this->comments_enabled;
     }
 }

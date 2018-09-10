@@ -158,7 +158,7 @@ class Strip extends Model implements HasMedia, Feedable
     }
 
     public function canComment() {
-        return empty($this->commentsEnabled) ? $this->issue->canComment() : $this->commentsEnabled;
+        return empty($this->comments_enabled) ? $this->issue->canComment() : $this->comments_enabled;
     }
 
     public function image($collection) {

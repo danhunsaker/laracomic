@@ -1,5 +1,4 @@
 @section("post-card-{$post->id}")
-
     <div class="card-header">
         @if (! $single)
             {{ $post->commenter->name }} at
