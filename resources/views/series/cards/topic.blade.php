@@ -14,7 +14,7 @@
 
     @if (! $single)
         <div class="card-body">
-            {{ $topic->description }}
+            @markdown($topic->description)
         </div>
     @endif
 @endsection

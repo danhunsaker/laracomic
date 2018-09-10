@@ -24,6 +24,6 @@
     </div>
 
     <div class="card-body">
-        {{ $post->content }}
+        @markdown($post->content)
     </div>
 @endsection

@@ -32,7 +32,7 @@
         </div>
 
         @if ($single)
-            {{ $strip->commentary }}
+            @markdown($strip->commentary)
         @endif
     </div>
 @endsection

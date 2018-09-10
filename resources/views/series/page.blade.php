@@ -9,7 +9,7 @@
                 <div class="card-header">{{ $page->title }}</div>
 
                 <div class="card-body">
-                    {{ $page->content }}
+                    @markdown($page->content)
                 </div>
             </div>
         </div>

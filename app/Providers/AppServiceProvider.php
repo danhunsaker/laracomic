@@ -29,6 +29,20 @@ class AppServiceProvider extends ServiceProvider
             'topic'     => 'App\Topic',
             'post'      => 'App\Post',
         ]);
+
+        $app = $this->app;
+
+        $app['blade.compiler']->directive('markdown', function($markdown) {
+            if ($markdown) {
+                return "<?php echo app('markdown')->convertToHtml({$markdown}); ?>";
+            }
+
+            return '<?php ob_start(); ?>';
+        });
+
+        $app['blade.compiler']->directive('endmarkdown', function () {
+            return "<?php echo app('markdown')->convertToHtml(ob_get_clean()); ?>";
+        });
     }
 
     /**

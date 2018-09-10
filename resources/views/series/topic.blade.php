@@ -39,7 +39,7 @@
                                             <div class="col">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        {{ trans_choice('{1} :value more post|[2,*] :value more posts', $child->children->count(), ['value' => $child->children->count()]) }}
+                                                        {{ trans_choice('{1} :value more post...|[2,*] :value more posts...', $child->children->count(), ['value' => $child->children->count()]) }}
                                                     </div>
                                                 </div>
                                             </div>

@@ -2,6 +2,6 @@
     <div class="card-header">{{ $series->title }}</div>
 
     <div class="card-body">
-        {{ $series->description }}
+        @markdown($series->description)
     </div>
 @endsection

@@ -10,6 +10,6 @@
     </div>
 
     <div class="card-body">
-        {{ $volume->description }}
+        @markdown($volume->description)
     </div>
 @endsection

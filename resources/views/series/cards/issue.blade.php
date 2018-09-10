@@ -10,6 +10,6 @@
     </div>
 
     <div class="card-body">
-        {{ $issue->description }}
+        @markdown($issue->description)
     </div>
 @endsection
