@@ -76,23 +76,23 @@ class User extends Authenticatable implements HasMedia
     }
 
     public function roles() {
-        return $this->belongsToMany('App\Role', 'authorables')->using('App\Authority');
+        return $this->belongsToMany('App\Role', 'authorables')->withPivot('authorables_id', 'authorables_type', 'created_at', 'updated_at')->using('App\Authority');
     }
 
     public function series() {
-        return $this->morphedByMany('App\Series', 'authorables')->using('App\Authority');
+        return $this->morphedByMany('App\Series', 'authorables')->withPivot('role_id', 'created_at', 'updated_at')->using('App\Authority');
     }
 
     public function volumes() {
-        return $this->morphedByMany('App\Volume', 'authorables')->using('App\Authority');
+        return $this->morphedByMany('App\Volume', 'authorables')->withPivot('role_id', 'created_at', 'updated_at')->using('App\Authority');
     }
 
     public function issues() {
-        return $this->morphedByMany('App\Issue', 'authorables')->using('App\Authority');
+        return $this->morphedByMany('App\Issue', 'authorables')->withPivot('role_id', 'created_at', 'updated_at')->using('App\Authority');
     }
 
     public function strips() {
-        return $this->morphedByMany('App\Strip', 'authorables')->using('App\Authority');
+        return $this->morphedByMany('App\Strip', 'authorables')->withPivot('role_id', 'created_at', 'updated_at')->using('App\Authority');
     }
 
     public function pages() {

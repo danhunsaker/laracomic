@@ -7,6 +7,7 @@
         @if (! $single)
             </a>
         @endif
+        by {{ $news->author->name }} at {{ $news->created_at }}
     </div>
 
     <div class="card-body">

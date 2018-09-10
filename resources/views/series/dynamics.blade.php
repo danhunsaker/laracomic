@@ -17,3 +17,12 @@
         <link rel="icon" href="{{ $media->getFullUrl('logo_favicon') }}">
     @endif
 @endsection
+
+@section('credits')
+    <dl class="credits">
+        @foreach ($current->authors as $author)
+            <dt>{{ $author->pivot->role->title }}</dt>
+            <dd>{{ $author->name }}</dd>
+        @endforeach
+    </dl>
+@endsection

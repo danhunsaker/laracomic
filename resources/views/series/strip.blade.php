@@ -17,6 +17,18 @@
         </div>
     </div>
 
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">Credits</div>
+
+                <div class="card-body">
+                    @yield('credits')
+                </div>
+            </div>
+        </div>
+    </div>
+
     @yield("strip-pager-{$strip->id}")
 
     <?php $next = $issue->strips->get($issue->strips->search(function ($item, $key) use ($strip) {return $item->id === $strip->id;}) + 1); ?>

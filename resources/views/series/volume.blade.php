@@ -36,6 +36,25 @@
 
     {{ $pager->links() }}
 
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    @if (isset($volume_collapsed) && $volume_collapsed)
+                        Series
+                    @else
+                        Volume
+                    @endif
+                    Credits
+                 </div>
+
+                <div class="card-body">
+                    @yield('credits')
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if($volume->canComment())
         {{ ($comments = $volume->comments()->paginate(15)->setPageName('comments'))->links() }}
 

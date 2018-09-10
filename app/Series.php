@@ -163,7 +163,7 @@ class Series extends Model implements HasMedia
     }
 
     public function authors() {
-        return $this->morphToMany('App\User', 'authorables')->using('App\Authority');
+        return $this->morphToMany('App\User', 'authorables')->withPivot('role_id', 'created_at', 'updated_at')->using('App\Authority');
     }
 
     public function roles() {

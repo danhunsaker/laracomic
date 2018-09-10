@@ -65,6 +65,6 @@ class Role extends Model
     }
 
     public function users() {
-        return $this->belongsToMany('App\User', 'authorables')->using('App\Authority');
+        return $this->belongsToMany('App\User', 'authorables')->withPivot('authorables_id', 'authorables_type', 'created_at', 'updated_at')->using('App\Authority');
     }
 }

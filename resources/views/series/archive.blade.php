@@ -23,6 +23,18 @@
 
         {{ $pager->links() }}
 
+        <div class="row justify-content-center">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">Series Credits</div>
+
+                    <div class="card-body">
+                        @yield('credits')
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @if($series->canComment())
             {{ ($comments = $series->comments()->paginate(15)->setPageName('comments'))->links() }}
 
