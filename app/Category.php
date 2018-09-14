@@ -28,8 +28,7 @@ class Category extends Model
 
     public $translatable = ['name', 'description'];
 
-    public function getSlugOptions(): SlugOptions
-    {
+    public function getSlugOptions(): SlugOptions {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('route')
@@ -52,5 +51,13 @@ class Category extends Model
 
     public function topics() {
         return $this->hasMany('App\Topic');
+    }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler')->merge($this->parent ? $this->parent->spoilers() : []);
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')->merge($this->parent ? $this->parent->warnings() : []);
     }
 }

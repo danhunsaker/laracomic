@@ -8,10 +8,11 @@ use ProAI\Versioning\SoftDeletes;
 use Balping\HashSlug\HasHashSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\Tags\HasTags;
 
 class Post extends Model
 {
-    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasStatuses;
+    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasStatuses, HasTags;
 
     /**
      * The attributes that aren't mass assignable.
@@ -48,5 +49,13 @@ class Post extends Model
 
     public function commenter() {
         return $this->belongsTo('App\User');
+    }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler')->merge($this->parent ? $this->parent->spoilers() : $this->topic->spoilers());
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')->merge($this->parent ? $this->parent->warnings() : $this->topic->warnings());
     }
 }

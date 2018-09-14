@@ -29,8 +29,7 @@ class Topic extends Model
 
     public $translatable = ['name', 'description'];
 
-    public function getSlugOptions(): SlugOptions
-    {
+    public function getSlugOptions(): SlugOptions {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('route')
@@ -53,5 +52,13 @@ class Topic extends Model
 
     public function posts() {
         return $this->hasMany('App\Post');
+    }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler')->merge($this->category->spoilers());
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')->merge($this->category->warnings());
     }
 }

@@ -164,4 +164,18 @@ class Strip extends Model implements HasMedia, Feedable
     public function image($collection) {
         return collect()->wrap($this->issue->image($collection))->prepend($this->getFirstMedia($collection))->filter()->first();
     }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler')
+                    ->merge($this->issue->volume->series->tagsWithType('spoiler'))
+                    ->merge($this->issue->volume->tagsWithType('spoiler'))
+                    ->merge($this->issue->tagsWithType('spoiler'));
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')
+                    ->merge($this->issue->volume->series->tagsWithType('warning'))
+                    ->merge($this->issue->volume->tagsWithType('warning'))
+                    ->merge($this->issue->tagsWithType('warning'));
+    }
 }

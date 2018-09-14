@@ -162,4 +162,19 @@ class Volume extends Model implements HasMedia
     public function image($collection) {
         return collect()->wrap($this->series->image($collection))->prepend($this->getFirstMedia($collection))->filter()->first();
     }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler')
+                    ->merge($this->series->tagsWithType('spoiler'));
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')
+                    ->merge($this->series->tagsWithType('warning'))
+                    ->merge($this->issues()->currentStatus('public')->get()->flatMap(function ($issue, $key) {
+            return $issue->tagsWithType('warning')->merge($issue->strips()->currentStatus('public')->get()->flatMap(function ($strip, $key) {
+                return $strip->tagsWithType('warning');
+            }));
+        }));
+    }
 }

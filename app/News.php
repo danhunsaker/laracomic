@@ -92,4 +92,12 @@ class News extends Model implements Feedable
     public function getFeed($series) {
         return static::currentStatus('public')->where(['series_id' => $series->id])->get();
     }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler');
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning');
+    }
 }

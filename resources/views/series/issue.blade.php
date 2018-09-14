@@ -22,18 +22,18 @@
         </div>
     @endif
 
-    {{ ($pager = $issue->strips()->paginate(5))->links() }}
+    {{ ($pager = $issue->strips()->paginate(12))->links() }}
 
-    @foreach ($pager as $strip)
-        @include('series.cards.strip', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'strip' => $strip, 'single' => false])
-        <div class="row justify-content-center">
-            <div class="col">
-                <div class="card">
-                    @yield("strip-card-{$strip->id}")
+    <div class="row">
+        @foreach ($pager as $strip)
+            @include('series.cards.strip', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'strip' => $strip, 'single' => false])
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card">
+                        @yield("strip-card-{$strip->id}")
+                    </div>
                 </div>
-            </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 
     {{ $pager->links() }}
 

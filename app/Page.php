@@ -55,8 +55,7 @@ class Page extends Model
         return true;
     }
 
-    public function getSlugOptions(): SlugOptions
-    {
+    public function getSlugOptions(): SlugOptions {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('route')
@@ -87,5 +86,15 @@ class Page extends Model
 
     public function canComment() {
         return empty($this->comments_enabled) ? (empty($this->parent) ? $this->series->canComment() : $this->parent->canComment()) : $this->comments_enabled;
+    }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler');
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')
+                    ->merge($this->parent ? $this->parent->tagsWithType('warning') : [])
+                    ->merge($this->series->tagsWithType('warning'));
     }
 }

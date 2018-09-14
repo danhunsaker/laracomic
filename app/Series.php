@@ -201,4 +201,18 @@ class Series extends Model implements HasMedia
     public function image($collection) {
         return collect()->wrap($this->getFirstMedia($collection))->filter()->first();
     }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler');
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')->merge($this->volumes()->currentStatus('public')->get()->flatMap(function ($volume, $key) {
+            return $volume->tagsWithType('warning')->merge($volume->issues()->currentStatus('public')->get()->flatMap(function ($issue, $key) {
+                return $issue->tagsWithType('warning')->merge($issue->strips()->currentStatus('public')->get()->flatMap(function ($strip, $key) {
+                    return $strip->tagsWithType('warning');
+                }));
+            }));
+        }));
+    }
 }

@@ -31,6 +31,14 @@ $font-family-sans-serif: "OpenDyslexic", sans-serif;
     margin-bottom: 1rem;
 }
 
+p:last-child,
+dl:last-child,
+ol:last-child,
+ul:last-child,
+address:last-child {
+    margin-bottom: 0;
+}
+
 $nav-bg: mix(opacify($card-cap-bg, 1), $card-bg, opacity($card-cap-bg) * 100);
 
 .navbar-laravel {
@@ -65,6 +73,10 @@ $nav-bg: mix(opacify($card-cap-bg, 1), $card-bg, opacity($card-cap-bg) * 100);
     width: -webkit-fill-available;
     width: -moz-available;
     text-align: center;
+}
+
+.page-link {
+    white-space: nowrap;
 }
 
 #banner {

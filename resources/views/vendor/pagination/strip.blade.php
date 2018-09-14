@@ -1,5 +1,5 @@
 @if ($paginator->hasPages())
-    <ul class="pagination" role="navigation">
+    <ul class="pagination flex-wrap flex-sm-nowrap" role="navigation">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
             <li class="page-item disabled" aria-disabled="true">

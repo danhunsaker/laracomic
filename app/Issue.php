@@ -154,4 +154,19 @@ class Issue extends Model implements HasMedia
     public function image($collection) {
         return collect()->wrap($this->volume->image($collection))->prepend($this->getFirstMedia($collection))->filter()->first();
     }
+
+    public function spoilers() {
+        return $this->tagsWithType('spoiler')
+                    ->merge($this->volume->series->tagsWithType('spoiler'))
+                    ->merge($this->volume->tagsWithType('spoiler'));
+    }
+
+    public function warnings() {
+        return $this->tagsWithType('warning')
+                    ->merge($this->volume->series->tagsWithType('warning'))
+                    ->merge($this->volume->tagsWithType('warning'))
+                    ->merge($this->strips()->currentStatus('public')->get()->flatMap(function ($strip, $key) {
+            return $strip->tagsWithType('warning');
+        }));
+    }
 }

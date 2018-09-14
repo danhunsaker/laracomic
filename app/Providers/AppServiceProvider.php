@@ -14,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        require_once(app_path('helpers.php'));
+
         Relation::morphMap([
             'user'      => 'App\User',
             'role'      => 'App\Role',
