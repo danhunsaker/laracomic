@@ -11,6 +11,16 @@
     </div>
 
     <div class="card-body">
-        @markdown($news->article)
+        @if ($news->warnings()->count() > 0)
+            @include('layouts.partials.content-warning', ['type' => 'article', 'warnings' => $news->warnings()])
+        @endif
+
+        @if ($news->spoilers()->count() > 0)
+            @include('layouts.partials.spoiler-warning', ['type' => 'article', 'spoilers' => $news->spoilers()])
+        @endif
+
+        <span class="{{ $news->warnings()->count() > 0 ? ' warned' : '' }}{{ $news->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+            @markdown($news->article)
+        </span>
     </div>
 @endsection

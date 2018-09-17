@@ -9,7 +9,17 @@
                 <div class="card-header">{{ $page->title }}</div>
 
                 <div class="card-body">
-                    @markdown($page->content)
+                    @if ($page->warnings()->count() > 0)
+                        @include('layouts.partials.content-warning', ['type' => 'page', 'warnings' => $page->warnings()])
+                    @endif
+
+                    @if ($page->spoilers()->count() > 0)
+                        @include('layouts.partials.spoiler-warning', ['type' => 'page', 'spoilers' => $page->spoilers()])
+                    @endif
+
+                    <span class="{{ $page->warnings()->count() > 0 ? ' warned' : '' }}{{ $page->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+                        @markdown($page->content)
+                    </span>
                 </div>
             </div>
         </div>

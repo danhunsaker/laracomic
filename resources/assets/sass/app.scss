@@ -27,8 +27,8 @@ $font-family-sans-serif: "OpenDyslexic", sans-serif;
     margin-bottom: 1rem;
 }
 
-.strip-image {
-    margin-bottom: 1rem;
+.strip-image + * {
+    margin-top: 1rem;
 }
 
 p:last-child,
@@ -59,6 +59,27 @@ $nav-bg: mix(opacify($card-cap-bg, 1), $card-bg, opacity($card-cap-bg) * 100);
 .navbar-laravel .navbar-brand a:hover,
 .navbar-laravel .navbar-nav .nav-link:hover {
     color: $link-hover-color;
+}
+
+.warned, .spoiled {
+    display: none;
+}
+
+.content-warning,
+.spoiler-warning {
+    text-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.content-warning + .spoiler-warning {
+    margin-top: 1rem;
+    display: none;
+}
+
+.content-warning h1,
+.spoiler-warning h1 {
+    font-size: 2rem;
 }
 
 .pagination {

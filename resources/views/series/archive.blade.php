@@ -8,20 +8,36 @@
     @if ($series->volumes->count() == 1)
         @include('series.volume', ['series' => $series, 'volume' => $series->volumes->first(), 'volume_collapsed' => true])
     @else
-        {{ ($pager = $series->volumes()->paginate(15))->links() }}
+        <div>
+            @if ($series->warnings()->count() > 0 || $series->spoilers()->count() > 0)
+                <div class="card warnings">
+                    <div class="card-body">
+                        @if ($series->warnings()->count() > 0)
+                            @include('layouts.partials.content-warning', ['type' => 'series', 'warnings' => $series->warnings()])
+                        @endif
 
-        @foreach ($pager as $volume)
-            @include('series.cards.volume', ['series' => $series, 'volume' => $volume, 'single' => false])
-            <div class="row justify-content-center">
-                <div class="col">
-                    <div class="card">
-                        @yield("volume-card-{$volume->id}")
+                        @if ($series->spoilers()->count() > 0)
+                            @include('layouts.partials.spoiler-warning', ['type' => 'series', 'spoilers' => $series->spoilers()])
+                        @endif
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endif
 
-        {{ $pager->links() }}
+            <div class="row justify-content-center{{ $series->warnings()->count() > 0 ? ' warned' : '' }}{{ $series->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+                {{ ($pager = $series->volumes()->paginate(15))->links() }}
+
+                @foreach ($pager as $volume)
+                    @include('series.cards.volume', ['series' => $series, 'volume' => $volume, 'single' => false])
+                    <div class="col-12">
+                        <div class="card">
+                            @yield("volume-card-{$volume->id}")
+                        </div>
+                    </div>
+                @endforeach
+
+                {{ $pager->links() }}
+            </div>
+        </div>
 
         <div class="row justify-content-center">
             <div class="col">

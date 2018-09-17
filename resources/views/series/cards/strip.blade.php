@@ -27,12 +27,22 @@
     </div>
 
     <div class="card-body">
-        <div class="strip-image">
-            {!! with($strip->getFirstMedia('content'))('content_site', ['alt' => $strip->description, 'width' => '100%']) !!}
-        </div>
-
-        @if ($single)
-            @markdown($strip->commentary)
+        @if ($strip->warnings()->count() > 0)
+            @include('layouts.partials.content-warning', ['type' => $strip->issue->strip_name, 'warnings' => $strip->warnings()])
         @endif
+
+        @if ($strip->spoilers()->count() > 0)
+            @include('layouts.partials.spoiler-warning', ['type' => $strip->issue->strip_name, 'spoilers' => $strip->spoilers()])
+        @endif
+
+        <span class="{{ $strip->warnings()->count() > 0 ? ' warned' : '' }}{{ $strip->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+            <div class="strip-image">
+                {!! with($strip->getFirstMedia('content'))('content_site', ['alt' => $strip->description, 'width' => '100%']) !!}
+            </div>
+
+            @if ($single)
+                @markdown($strip->commentary)
+            @endif
+        </span>
     </div>
 @endsection

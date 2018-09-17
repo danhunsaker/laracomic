@@ -22,20 +22,36 @@
         </div>
     @endif
 
-    {{ ($pager = $issue->strips()->paginate(12))->links() }}
+    <div>
+        @if ($issue->warnings()->count() > 0 || $issue->spoilers()->count() > 0)
+            <div class="card warnings">
+                <div class="card-body">
+                    @if ($issue->warnings()->count() > 0)
+                        @include('layouts.partials.content-warning', ['type' => $issue->volume->issue_name, 'warnings' => $issue->warnings()])
+                    @endif
 
-    <div class="row">
-        @foreach ($pager as $strip)
-            @include('series.cards.strip', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'strip' => $strip, 'single' => false])
+                    @if ($issue->spoilers()->count() > 0)
+                        @include('layouts.partials.spoiler-warning', ['type' => $issue->volume->issue_name, 'spoilers' => $issue->spoilers()])
+                    @endif
+                </div>
+            </div>
+        @endif
+
+        <div class="row{{ $issue->warnings()->count() > 0 ? ' warned' : '' }}{{ $issue->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+            {{ ($pager = $issue->strips()->paginate(12))->links() }}
+
+            @foreach ($pager as $strip)
+                @include('series.cards.strip', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'strip' => $strip, 'single' => false])
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <div class="card">
                         @yield("strip-card-{$strip->id}")
                     </div>
                 </div>
-        @endforeach
-    </div>
+            @endforeach
 
-    {{ $pager->links() }}
+            {{ $pager->links() }}
+        </div>
+    </div>
 
     <div class="row justify-content-center">
         <div class="col">

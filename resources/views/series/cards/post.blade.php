@@ -23,6 +23,16 @@
     </div>
 
     <div class="card-body">
-        @markdown($post->content)
+        @if ($post->warnings()->count() > 0)
+            @include('layouts.partials.content-warning', ['type' => 'post', 'warnings' => $post->warnings()])
+        @endif
+
+        @if ($post->spoilers()->count() > 0)
+            @include('layouts.partials.spoiler-warning', ['type' => 'post', 'spoilers' => $post->spoilers()])
+        @endif
+
+        <span class="{{ $post->warnings()->count() > 0 ? ' warned' : '' }}{{ $post->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+            @markdown($post->content)
+        </span>
     </div>
 @endsection

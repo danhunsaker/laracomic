@@ -6,6 +6,43 @@
 
 require('./bootstrap');
 
+$(function () {
+    $('[data-toggle="popover"]').popover({trigger: 'focus'});
+    $('.dismiss-warning').click(function() {
+        var warning = $(this).parent().parent();
+        if (warning.parent().hasClass('card-body') && warning.parent().parent().hasClass('warnings')) {
+            warning = warning.parent().parent();
+        }
+        var warned  = warning.parent().children('.warned');
+        warning.slideUp('slow', function() {
+            $(this).remove();
+        });
+        warned.removeClass('warned');
+        if (! warned.hasClass('spoiled')) {
+            warned.slideUp(0, function() {
+                warned.slideDown('slow');
+            });
+        } else {
+            var spoiler = warning.parent().children('.spoiler-warning');
+            spoiler.slideDown('slow');
+        }
+    });
+    $('.dismiss-spoiler').click(function() {
+        var spoiler = $(this).parent().parent();
+        if (spoiler.parent().hasClass('card-body') && spoiler.parent().parent().hasClass('warnings')) {
+            spoiler = spoiler.parent().parent();
+        }
+        var spoiled = spoiler.parent().children('.spoiled');
+        spoiler.slideUp('slow', function() {
+            $(this).remove();
+        });
+        spoiled.removeClass('spoiled');
+        spoiled.slideUp(0, function() {
+            spoiled.slideDown('slow');
+        });
+    });
+});
+
 window.Vue = require('vue');
 
 /**

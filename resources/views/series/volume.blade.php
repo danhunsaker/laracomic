@@ -21,20 +21,36 @@
         </div>
     @endif
 
-    {{ ($pager = $volume->issues()->paginate(15))->links() }}
+    <div>
+        @if ($volume->warnings()->count() > 0 || $volume->spoilers()->count() > 0)
+            <div class="card warnings">
+                <div class="card-body">
+                    @if ($volume->warnings()->count() > 0)
+                        @include('layouts.partials.content-warning', ['type' => $volume->series->volume_name, 'warnings' => $volume->warnings()])
+                    @endif
 
-    @foreach ($pager as $issue)
-        @include('series.cards.issue', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'single' => false])
-        <div class="row justify-content-center">
-            <div class="col">
-                <div class="card">
-                    @yield("issue-card-{$issue->id}")
+                    @if ($volume->spoilers()->count() > 0)
+                        @include('layouts.partials.spoiler-warning', ['type' => $volume->series->volume_name, 'spoilers' => $volume->spoilers()])
+                    @endif
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endif
 
-    {{ $pager->links() }}
+        <div class="row justify-content-center{{ $volume->warnings()->count() > 0 ? ' warned' : '' }}{{ $volume->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+            {{ ($pager = $volume->issues()->paginate(15))->links() }}
+
+            @foreach ($pager as $issue)
+                @include('series.cards.issue', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'single' => false])
+                <div class="col-12">
+                    <div class="card">
+                        @yield("issue-card-{$issue->id}")
+                    </div>
+                </div>
+            @endforeach
+
+            {{ $pager->links() }}
+        </div>
+    </div>
 
     <div class="row justify-content-center">
         <div class="col">

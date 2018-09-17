@@ -14,7 +14,17 @@
 
     @if (! $single)
         <div class="card-body">
-            @markdown($category->description)
+            @if ($category->warnings()->count() > 0)
+                @include('layouts.partials.content-warning', ['type' => 'category', 'warnings' => $category->warnings()])
+            @endif
+
+            @if ($category->spoilers()->count() > 0)
+                @include('layouts.partials.spoiler-warning', ['type' => 'category', 'spoilers' => $category->spoilers()])
+            @endif
+
+            <span class="{{ $category->warnings()->count() > 0 ? ' warned' : '' }}{{ $category->spoilers()->count() > 0 ? ' spoiled' : '' }}">
+                @markdown($category->description)
+            </span>
         </div>
     @endif
 @endsection
