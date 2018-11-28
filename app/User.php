@@ -11,10 +11,11 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Balping\HashSlug\HasHashSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\Activitylog\Traits\HasActivity;
 
 class User extends Authenticatable implements HasMedia
 {
-    use Notifiable, Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasStatuses;
+    use Notifiable, Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasStatuses, HasActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +23,7 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_author',
+        'name', 'email', 'password', 'is_super', 'is_author',
     ];
 
     /**
@@ -49,6 +50,20 @@ class User extends Authenticatable implements HasMedia
     public $versioned = ['name', 'is_author', 'owner_id', 'updated_at', 'deleted_at'];
 
     public $translatable = ['name'];
+
+    protected static $logAttributes = ['name', 'is_author', 'owner_id', '*'];
+
+    protected static $logAttributesToIgnore = ['password', 'remember_token', 'updated_at'];
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logName = 'auth';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = \Auth::user() ? \Auth::user()->name : 'the system';
+        return class_basename(get_class()) . " :subject.name.en {$eventName} by {$userName}";
+    }
 
     public function registerMediaCollections() {
         $this->addMediaCollection('avatar')

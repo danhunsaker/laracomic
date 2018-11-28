@@ -11,10 +11,11 @@ use Balping\HashSlug\HasHashSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Tags\HasTags;
 use Spatie\ModelStatus\HasStatuses;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Volume extends Model implements HasMedia
 {
-    use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses;
+    use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -46,6 +47,20 @@ class Volume extends Model implements HasMedia
     public $versioned = ['number', 'title', 'description', 'issue_name', 'strip_name', 'comments_enabled', 'updated_at', 'deleted_at'];
 
     public $translatable = ['title', 'description', 'issue_name', 'strip_name'];
+
+    protected static $logAttributes = ['number', 'title', 'description', 'issue_name', 'strip_name', 'comments_enabled', '*'];
+
+    protected static $logAttributesToIgnore = ['updated_at', 'deleted_at'];
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logName = 'comic';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = \Auth::user() ? \Auth::user()->name : 'the system';
+        return class_basename(get_class()) . " :subject.title.en {$eventName} by {$userName}";
+    }
 
     public function registerMediaCollections() {
         $this->addMediaCollection('banner')

@@ -32,6 +32,7 @@ run.config:
       - pdo_odbc
       - pdo_pgsql
       - pdo_sqlite
+      - sqlite3
       - igbinary
       - redis
       - sodium

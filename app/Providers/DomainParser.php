@@ -18,8 +18,10 @@ class DomainParser extends ServiceProvider
      */
     public function boot()
     {
-        config(['app.domain' => app('Pdp\Rules')->resolve(Request::getHost())->getRegistrableDomain() ?:
-                                str_replace(['http://', 'https://'], '', config('app.url'))]);
+        $siteDomain = str_replace(['http://', 'https://'], '', config('app.url'));
+        $rootDomain = app('Pdp\Rules')->resolve(Request::getHost())->getRegistrableDomain();
+
+        config(['app.domain' => stripos(Request::getHost(), $siteDomain) >= 0 ? $siteDomain : $rootDomain]);
         config(['session.domain' => config('app.domain')]);
     }
 

@@ -12,4 +12,5 @@ yarn-error.log
 .env
 .phpunit.result.cache
 
-storage/medialibrary/temp/
+/storage/medialibrary/temp/
+/storage/*.index

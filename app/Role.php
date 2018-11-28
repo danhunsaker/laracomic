@@ -8,10 +8,11 @@ use Balping\HashSlug\HasHashSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Role extends Model
 {
-    use SoftDeletes, HasHashSlug, HasTranslations, HasSlug;
+    use SoftDeletes, HasHashSlug, HasTranslations, HasSlug, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -49,6 +50,20 @@ class Role extends Model
     ];
 
     public $translatable = ['title'];
+
+    protected static $logAttributes = ['*'];
+
+    protected static $logAttributesToIgnore = ['updated_at', 'deleted_at'];
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logName = 'auth';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = \Auth::user() ? \Auth::user()->name : 'the system';
+        return class_basename(get_class()) . " :subject.title.en {$eventName} by {$userName}";
+    }
 
     public function getSlugOptions(): SlugOptions
     {

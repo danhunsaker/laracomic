@@ -11,10 +11,11 @@ use Spatie\Tags\HasTags;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class News extends Model implements Feedable
 {
-    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasTags, HasStatuses;
+    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasTags, HasStatuses, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -46,6 +47,20 @@ class News extends Model implements Feedable
     public $versioned = ['author_id', 'headline', 'article', 'comments_enabled', 'updated_at', 'deleted_at'];
 
     public $translatable = ['headline', 'article'];
+
+    protected static $logAttributes = ['author_id', 'headline', 'article', 'comments_enabled', '*'];
+
+    protected static $logAttributesToIgnore = ['updated_at', 'deleted_at'];
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logName = 'series';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = \Auth::user() ? \Auth::user()->name : 'the system';
+        return "Article :subject.headline.en {$eventName} by {$userName}";
+    }
 
     public function isValidStatus(string $name, ?string $reason = null): bool {
         if (! in_array($name, ['draft', 'pending', 'scheduled', 'private', 'early_access', 'public', 'flagged', 'blocked'])) {

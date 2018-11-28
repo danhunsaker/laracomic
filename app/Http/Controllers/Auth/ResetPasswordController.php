@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use DanHunsaker\PasswordTopology\ResetsPasswords;
 
 class ResetPasswordController extends Controller
 {
@@ -35,5 +35,18 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules()
+    {
+        $rules = parent::rules();
+        $rules['password'] = 'required|confirmed|min:10|case_diff|numbers|letters|symbols|topology';
+
+        return $rules;
     }
 }

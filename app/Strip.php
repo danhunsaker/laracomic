@@ -13,10 +13,11 @@ use Spatie\Tags\HasTags;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Strip extends Model implements HasMedia, Feedable
 {
-    use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses;
+    use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -48,6 +49,20 @@ class Strip extends Model implements HasMedia, Feedable
     public $versioned = ['number', 'title', 'description', 'commentary', 'comments_enabled', 'updated_at', 'deleted_at'];
 
     public $translatable = ['title', 'description', 'commentary'];
+
+    protected static $logAttributes = ['number', 'title', 'description', 'commentary', 'comments_enabled', '*'];
+
+    protected static $logAttributesToIgnore = ['updated_at', 'deleted_at'];
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logName = 'comic';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = \Auth::user() ? \Auth::user()->name : 'the system';
+        return class_basename(get_class()) . " :subject.title.en {$eventName} by {$userName}";
+    }
 
     public function registerMediaCollections() {
         $this->addMediaCollection('banner')

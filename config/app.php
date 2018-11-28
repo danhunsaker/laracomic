@@ -150,7 +150,9 @@ return [
         /*
          * Package Service Providers...
          */
+        SocialiteProviders\Manager\ServiceProvider::class,
         Spatie\GoogleSearch\GoogleSearchServiceProvider::class,
+        TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
 
         /*
          * Application Service Providers...

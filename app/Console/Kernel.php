@@ -24,8 +24,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // Remove log entries older than the configured number of days
+        $schedule->command('activitylog:clean')->daily();
+        // Remove expired password reset tokens
+        $schedule->command('auth:clear-resets')->daily();
+        // Remove orphaned media files
+        $schedule->command('medialibrary:clean')->weekly();
     }
 
     /**

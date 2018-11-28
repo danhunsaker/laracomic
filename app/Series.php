@@ -13,10 +13,11 @@ use Spatie\Tags\HasTags;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Series extends Model implements HasMedia
 {
-    use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses, HasSlug;
+    use Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasTags, HasStatuses, HasSlug, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -60,6 +61,20 @@ class Series extends Model implements HasMedia
     public $versioned = ['title', 'description', 'volume_name', 'issue_name', 'strip_name', 'comments_enabled', 'updated_at', 'deleted_at'];
 
     public $translatable = ['title', 'description', 'volume_name', 'issue_name', 'strip_name'];
+
+    protected static $logAttributes = ['title', 'description', 'volume_name', 'issue_name', 'strip_name', 'comments_enabled', '*'];
+
+    protected static $logAttributesToIgnore = ['updated_at', 'deleted_at'];
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logName = 'series';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = \Auth::user() ? \Auth::user()->name : 'the system';
+        return class_basename(get_class()) . " :subject.title.en {$eventName} by {$userName}";
+    }
 
     public function registerMediaCollections() {
         $this->addMediaCollection('banner')

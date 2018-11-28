@@ -1,6 +1,8 @@
 # LaraComic!
 A web comics platform written in Laravel
 
+[![Liberapay receiving](https://img.shields.io/liberapay/receives/danhunsaker.svg?style=flat-square)](https://liberapay.com/danhunsaker/)
+
 ## Features
 
 - **Open** platform, _designed_ for **comics** (and similar serialized content)

@@ -11,10 +11,11 @@ use Spatie\Tags\HasTags;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Topic extends Model
 {
-    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasTags, HasStatuses, HasSlug;
+    use Versionable, SoftDeletes, HasHashSlug, HasTranslations, HasTags, HasStatuses, HasSlug, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -28,6 +29,20 @@ class Topic extends Model
     public $versioned = ['name', 'description', 'updated_at', 'deleted_at'];
 
     public $translatable = ['name', 'description'];
+
+    protected static $logAttributes = ['name', 'description', '*'];
+
+    protected static $logAttributesToIgnore = ['updated_at', 'deleted_at'];
+
+    protected static $logOnlyDirty = true;
+
+    protected static $logName = 'forum';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $userName = \Auth::user() ? \Auth::user()->name : 'the system';
+        return class_basename(get_class()) . " :subject.name.en {$eventName} by {$userName}";
+    }
 
     public function getSlugOptions(): SlugOptions {
         return SlugOptions::create()
