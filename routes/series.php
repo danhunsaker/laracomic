@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 |
 | Collected here are the routes for a given series, which can be reached
-| via either subdomain or subdirectory.
+| via either custom domain, subdomain, or subdirectory.
 |
 */
 

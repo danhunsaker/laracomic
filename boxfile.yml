@@ -45,6 +45,7 @@ run.config:
     - node_modules
   extra_packages:
     - nodejs
+    - python-2
     - ffmpeg3
     - jpegoptim
     - optipng

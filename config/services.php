@@ -17,25 +17,25 @@ return [
     'deviantart' => [
         'client_id' => env('DEVIANTART_KEY'),
         'client_secret' => env('DEVIANTART_SECRET'),
-        'redirect' => env('DEVIANTART_REDIRECT_URI')
+        'redirect' => '/login/deviantart/callback'
     ],
 
     'facebook' => [
         'client_id' => env('FACEBOOK_KEY'),
         'client_secret' => env('FACEBOOK_SECRET'),
-        'redirect' => env('FACEBOOK_REDIRECT_URI')
+        'redirect' => '/login/facebook/callback'
     ],
 
     'google' => [
         'client_id' => env('GOOGLE_KEY'),
         'client_secret' => env('GOOGLE_SECRET'),
-        'redirect' => env('GOOGLE_REDIRECT_URI')
+        'redirect' => '/login/google/callback'
     ],
 
     'instagram' => [
         'client_id' => env('INSTAGRAM_KEY'),
         'client_secret' => env('INSTAGRAM_SECRET'),
-        'redirect' => env('INSTAGRAM_REDIRECT_URI')
+        'redirect' => '/login/instagram/callback'
     ],
 
     'mailgun' => [
@@ -46,13 +46,13 @@ return [
     'patreon' => [
         'client_id' => env('PATREON_KEY'),
         'client_secret' => env('PATREON_SECRET'),
-        'redirect' => env('PATREON_REDIRECT_URI')
+        'redirect' => '/login/patreon/callback'
     ],
 
     'pinterest' => [
         'client_id' => env('PINTEREST_KEY'),
         'client_secret' => env('PINTEREST_SECRET'),
-        'redirect' => env('PINTEREST_REDIRECT_URI')
+        'redirect' => '/login/pinterest/callback'
     ],
 
     'ses' => [
@@ -74,13 +74,13 @@ return [
     'tumblr' => [
         'client_id' => env('TUMBLR_KEY'),
         'client_secret' => env('TUMBLR_SECRET'),
-        'redirect' => env('TUMBLR_REDIRECT_URI')
+        'redirect' => '/login/tumblr/callback'
     ],
 
     'twitter' => [
         'client_id' => env('TWITTER_KEY'),
         'client_secret' => env('TWITTER_SECRET'),
-        'redirect' => env('TWITTER_REDIRECT_URI')
+        'redirect' => '/login/twitter/callback'
     ],
 
 ];
