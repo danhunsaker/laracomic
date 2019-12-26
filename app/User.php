@@ -12,11 +12,11 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Balping\HashSlug\HasHashSlug;
 use Spatie\Translatable\HasTranslations;
 use Spatie\ModelStatus\HasStatuses;
-use Spatie\Activitylog\Traits\HasActivity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-    use Notifiable, Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasStatuses, HasActivity;
+    use Notifiable, Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasStatuses, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
