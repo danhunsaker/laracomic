@@ -84,7 +84,7 @@ class News extends Model implements Feedable
                     'news' => $this->slug(),
                 ], false)
             ), '?'),
-            'author' => $this->author,
+            'author' => [$this->author],
         ]);
     }
 
@@ -104,7 +104,7 @@ class News extends Model implements Feedable
         return empty($this->comments_enabled) ? $this->series->canComment() : $this->comments_enabled;
     }
 
-    public function getFeed($series) {
+    public static function getFeed($series) {
         return static::currentStatus('public')->where(['series_id' => $series->id])->get();
     }
 

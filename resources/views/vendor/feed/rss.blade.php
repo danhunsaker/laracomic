@@ -15,7 +15,9 @@
                 <title><![CDATA[{{ $item->title }}]]></title>
                 <link>{{ url($item->link) }}</link>
                 <description><![CDATA[{!! $item->summary !!}]]></description>
-                <author><![CDATA[{{ $item->author }}]]></author>
+                @foreach ($item->author as $author)
+                    <author><![CDATA[{{ $author->name }}]]></author>
+                @endforeach
                 <guid>{{ url($item->id) }}</guid>
                 <pubDate>{{ $item->updated->toRssString() }}</pubDate>
             </item>
