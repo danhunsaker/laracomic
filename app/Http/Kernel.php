@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'nocache' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'withseries' => \App\Http\Middleware\WithSeries::class,
     ];
 }

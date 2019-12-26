@@ -51,6 +51,7 @@ run.config:
     - optipng
     # - pngquant
     - gifsicle
+    - unzip
   dev_packages:
     - mysql-client
     - redis

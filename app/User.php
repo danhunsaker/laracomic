@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use ProAI\Versioning\Versionable;
@@ -13,7 +14,7 @@ use Spatie\Translatable\HasTranslations;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Activitylog\Traits\HasActivity;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     use Notifiable, Versionable, SoftDeletes, HasMediaTrait, HasHashSlug, HasTranslations, HasStatuses, HasActivity;
 

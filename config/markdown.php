@@ -42,16 +42,11 @@ return [
     */
 
     'extensions' => [
-        AltThree\Emoji\EmojiExtension::class,
-        CommonMarkExt\Strikethrough\StrikethroughExtension::class,
-        Danhunsaker\Markua\Extension\MarkuaExtension::class,
-        Jonnybarnes\CommonmarkLinkify\LinkifyExtension::class,
+        CachetHQ\Emoji\EmojiExtension::class,
         JohnnyHuy\Laravel\UsefulCommonMarkExtension::class,
-        League\CommonMark\Extras\SmartPunct\SmartPunctExtension::class,
-        League\CommonMark\Extras\TwitterHandleAutolink\TwitterHandleAutolinkExtension::class,
+        League\CommonMark\Extras\CommonMarkExtrasExtension::class,
         Ows\CommonMark\SubExtension::class,
-        Ows\CommonMark\SupExtension::class,
-        Webuni\CommonMark\TableExtension\TableExtension::class,
+        Ows\CommonMark\SupExtension::class
     ],
 
     /*
