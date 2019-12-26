@@ -57,6 +57,44 @@ class LoginController extends Controller
     {
         $user = Socialite::driver($provider)->user();
 
-        // $user->token;
+        $ident = \App\UserIdentity::updateOrCreate([
+            'provider' => $provider,
+            'identifier' => $user->getId(),
+        ], [
+            'token' => $user->token,
+            'secret' => $user->tokenSecret,
+            'nickname' => $user->getNickname(),
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'avatar' => $user->getAvatar(),
+        ]);
+
+        if (\Auth::check()) {
+            if ($ident->hasUser()) {
+                if (\Auth::user()->is($ident->user)) {
+                    // Updated
+                    return redirect()->intended($this->redirectPath())->with('status', 'Connection updated.');
+                } else {
+                    // Already in use
+                    return redirect()->intended($this->redirectPath())->with('status', 'Connection already in use!');
+                }
+            } else {
+                // Connect
+                $ident->user_id = \Auth::id();
+                $ident->save;
+
+                return redirect()->intended($this->redirectPath())->with('status', 'Connection established.');
+            }
+        } else {
+            if ($ident->hasUser()) {
+                // Log in
+                \Auth::login($ident->user, true);
+
+                return redirect()->intended($this->redirectPath())->with('status', 'Welcome back!');
+            } else {
+                // Register
+                return view('auth.social')->with(compact('ident'));
+            }
+        }
     }
 }

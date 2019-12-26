@@ -11,7 +11,10 @@
 */
 
 Auth::routes(['verify' => true]);
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social.login');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social.callback');
+Route::namespace('Auth')->name('social.')->group(function () {
+    Route::get('login/{provider}', 'LoginController@redirectToProvider')->name('login');
+    Route::get('login/{provider}/callback', 'LoginController@handleProviderCallback')->name('callback');
+    Route::post('register/{provider}/{id}', 'RegisterController@fromProvider')->name('register');
+});
 
 Route::get('home', 'HomeController@index')->name('home');

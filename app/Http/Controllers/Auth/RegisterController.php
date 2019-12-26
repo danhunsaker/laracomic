@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -30,6 +31,8 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
+
+    protected $ident = null;
 
     /**
      * Create a new controller instance.
@@ -73,5 +76,26 @@ class RegisterController extends Controller
         $this->updateTopologyUsage($data['password']);
 
         return $user;
+    }
+
+    public function fromProvider(Request $request, $provider, $id) {
+        $this->ident = \App\UserIdentity::where(['provider' => $provider, 'identifier' => $id])->firstOrFail();
+
+        return $this->register($request);
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        if (!is_null($this->ident)) {
+            $this->ident->user_id = $user->id;
+            $this->ident->save();
+        }
     }
 }
