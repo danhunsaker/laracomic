@@ -4,9 +4,9 @@
 
 @include('series.cards.strip', [
     'series' => $series,
-    'volume' => ($volume = $series->volumes->last()),
-    'issue' => ($issue = $volume->issues->last()),
-    'strip' => ($strip = $issue->strips->last()),
+    'strip' => ($strip = $series->strips()->last()),
+    'volume' => ($volume = $strip->volume),
+    'issue' => ($issue = $strip->issue),
     'single' => true,
 ])
 

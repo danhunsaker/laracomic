@@ -51,10 +51,13 @@ class CreateAuthor extends Command
         }
 
         $user = User::create(['name' => $name, 'email' => $email, 'password' => \Hash::make($pass)]);
+        $user->email_verified_at = now();
         $user->is_super = false;
         $user->is_author = true;
         $user->save();
 
         $this->line('Author created! You can now log in.');
+
+        return 0;
     }
 }

@@ -36,12 +36,18 @@
         @endif
 
         <span class="{{ $strip->warnings()->count() > 0 ? ' warned' : '' }}{{ $strip->spoilers()->count() > 0 ? ' spoiled' : '' }}">
-            <div class="strip-image">
-                {!! with($strip->getFirstMedia('content'))('content_site', ['alt' => $strip->description, 'width' => '100%']) !!}
-            </div>
+            @if ($strip->hasMedia('content'))
+                <div class="strip-image">
+                    {!! with($strip->getFirstMedia('content'))('content_site', ['alt' => $strip->description, 'width' => '100%']) !!}
+                </div>
+            @else
+                <p>{{ __('Image Missing') }}</p>
+            @endif
 
             @if ($single)
-                @markdown($strip->commentary)
+                <div class="strip-commentary">
+                    @markdown($strip->commentary)
+                </div>
             @endif
         </span>
     </div>

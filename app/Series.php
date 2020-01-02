@@ -170,11 +170,7 @@ class Series extends Model implements HasMedia
     }
 
     public function strips() {
-        return $this->volumes->flatMap(function ($volume, $key) {
-            return $volume->issues->flatMap(function ($issue, $key) {
-                return $issue->strips;
-            });
-        });
+        return $this->volumes->flatMap->issues->flatMap->strips;
     }
 
     public function authors() {

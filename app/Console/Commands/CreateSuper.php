@@ -51,10 +51,13 @@ class CreateSuper extends Command
         }
 
         $user = User::create(['name' => $name, 'email' => $email, 'password' => \Hash::make($pass)]);
+        $user->email_verified_at = now();
         $user->is_super = true;
         $user->is_author = false;
         $user->save();
 
         $this->line('Super user created! You can now log in.');
+
+        return 0;
     }
 }

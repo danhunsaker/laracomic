@@ -41,7 +41,7 @@
 
             @foreach ($pager as $issue)
                 @include('series.cards.issue', ['series' => $series, 'volume' => $volume, 'issue' => $issue, 'single' => false])
-                <div class="col-12">
+                <div class="col-sm-6 col-lg-4 col-xl-3">
                     <div class="card">
                         @yield("issue-card-{$issue->id}")
                     </div>

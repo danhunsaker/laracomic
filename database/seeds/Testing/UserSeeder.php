@@ -22,5 +22,7 @@ class UserSeeder extends Seeder
         if (User::where(['is_super' => false, 'is_author' => false])->get()->count() < 1) {
             \Artisan::call('laracomic:create-user', [], new StreamOutput($stream));
         }
+
+        \Artisan::call('laracomic:create-author', ['--email' => 'info@davidrevoy.com', 'name' => 'David Revoy'], new StreamOutput($stream));
     }
 }
