@@ -20,6 +20,12 @@ return [
         'redirect' => '/login/deviantart/callback'
     ],
 
+    'discord' => [
+        'client_id' => env('DISCORD_KEY'),
+        'client_secret' => env('DISCORD_SECRET'),
+        'redirect' => '/login/discord/callback'
+    ],
+
     'facebook' => [
         'client_id' => env('FACEBOOK_KEY'),
         'client_secret' => env('FACEBOOK_SECRET'),
@@ -38,6 +44,12 @@ return [
         'redirect' => '/login/instagram/callback'
     ],
 
+    'live' => [
+        'client_id' => env('MICROSOFT_KEY'),
+        'client_secret' => env('MICROSOFT_SECRET'),
+        'redirect' => '/login/live/callback'
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
@@ -53,6 +65,12 @@ return [
         'client_id' => env('PINTEREST_KEY'),
         'client_secret' => env('PINTEREST_SECRET'),
         'redirect' => '/login/pinterest/callback'
+    ],
+
+    'reddit' => [
+        'client_id' => env('REDDIT_KEY'),
+        'client_secret' => env('REDDIT_SECRET'),
+        'redirect' => '/login/reddit/callback'
     ],
 
     'ses' => [
@@ -81,6 +99,12 @@ return [
         'client_id' => env('TWITTER_KEY'),
         'client_secret' => env('TWITTER_SECRET'),
         'redirect' => '/login/twitter/callback'
+    ],
+
+    'yahoo' => [
+        'client_id' => env('YAHOO_KEY'),
+        'client_secret' => env('YAHOO_SECRET'),
+        'redirect' => '/login/yahoo/callback'
     ],
 
 ];

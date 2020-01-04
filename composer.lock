@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28e40c8b63c9f7c0177b0707df8d6ed2",
+    "content-hash": "1e6cc9cc6637e776c798418ed9cd89bd",
     "packages": [
         {
             "name": "alchemy/binary-driver",
@@ -4175,6 +4175,43 @@
             "time": "2017-10-03T08:49:11+00:00"
         },
         {
+            "name": "socialiteproviders/discord",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Discord.git",
+                "reference": "e0cd8895f321943b36f533e7bf21ad29bcdece9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Discord/zipball/e0cd8895f321943b36f533e7bf21ad29bcdece9a",
+                "reference": "e0cd8895f321943b36f533e7bf21ad29bcdece9a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~2.0 || ~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Discord\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christopher Eklund",
+                    "email": "eklundchristopher@gmail.com"
+                }
+            ],
+            "description": "Discord OAuth2 Provider for Laravel Socialite",
+            "time": "2018-05-26T03:40:07+00:00"
+        },
+        {
             "name": "socialiteproviders/instagram",
             "version": "v3.0.0",
             "source": {
@@ -4269,6 +4306,43 @@
             "time": "2019-09-25T06:06:35+00:00"
         },
         {
+            "name": "socialiteproviders/microsoft-live",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Microsoft-Live.git",
+                "reference": "b8c5ae6616e9fa2b31a067b0171c32f778311edd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Microsoft-Live/zipball/b8c5ae6616e9fa2b31a067b0171c32f778311edd",
+                "reference": "b8c5ae6616e9fa2b31a067b0171c32f778311edd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Live\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Faust",
+                    "email": "hello@brianfaust.de"
+                }
+            ],
+            "description": "Microsoft Live OAuth2 Provider for Laravel Socialite",
+            "time": "2017-01-25T09:48:29+00:00"
+        },
+        {
             "name": "socialiteproviders/patreon",
             "version": "v2.0.0",
             "source": {
@@ -4343,6 +4417,43 @@
             "time": "2017-05-15T06:06:12+00:00"
         },
         {
+            "name": "socialiteproviders/reddit",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Reddit.git",
+                "reference": "c33331c58436947289e78e482747cdbf98f502f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Reddit/zipball/c33331c58436947289e78e482747cdbf98f502f0",
+                "reference": "c33331c58436947289e78e482747cdbf98f502f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Reddit\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Faust",
+                    "email": "hello@brianfaust.de"
+                }
+            ],
+            "description": "Reddit OAuth2 Provider for Laravel Socialite",
+            "time": "2017-01-25T09:48:29+00:00"
+        },
+        {
             "name": "socialiteproviders/tumblr",
             "version": "v3.0.0",
             "source": {
@@ -4378,6 +4489,43 @@
             ],
             "description": "Tumblr OAuth1 Provider for Laravel Socialite",
             "time": "2017-01-25T09:48:29+00:00"
+        },
+        {
+            "name": "socialiteproviders/yahoo",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/Yahoo.git",
+                "reference": "f86300c4cfca11055b4fd5ce3a702255251dae4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/Yahoo/zipball/f86300c4cfca11055b4fd5ce3a702255251dae4c",
+                "reference": "f86300c4cfca11055b4fd5ce3a702255251dae4c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0",
+                "socialiteproviders/manager": "~2.0 || ~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\Yahoo\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brian Faust",
+                    "email": "hello@brianfaust.de"
+                }
+            ],
+            "description": "Yahoo OAuth2 Provider for Laravel Socialite",
+            "time": "2017-12-02T16:03:08+00:00"
         },
         {
             "name": "spatie/eloquent-sortable",

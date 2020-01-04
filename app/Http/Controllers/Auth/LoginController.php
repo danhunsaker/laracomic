@@ -43,8 +43,12 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider($provider)
+    public function redirectToProvider($series, $provider = null)
     {
+        if (empty($provider)) {
+            $provider = $series;
+        }
+
         return Socialite::driver($provider)->redirect();
     }
 
@@ -53,8 +57,12 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback($series, $provider = null)
     {
+        if (empty($provider)) {
+            $provider = $series;
+        }
+
         $user = Socialite::driver($provider)->user();
 
         $ident = \App\UserIdentity::updateOrCreate([

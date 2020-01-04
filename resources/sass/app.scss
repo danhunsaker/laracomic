@@ -9,6 +9,12 @@ $font-family-sans-serif: "OpenDyslexic", sans-serif;
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Font Awesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+
 .cookie-consent {
     background: $purple;
     color: $body-bg;
@@ -98,6 +104,20 @@ $nav-bg: mix(opacify($card-cap-bg, 1), $card-bg, opacity($card-cap-bg) * 100);
 
 .page-link {
     white-space: nowrap;
+}
+
+.or-separator {
+    margin: 20px 0 10px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+.or-separator i {
+    padding: 0 10px;
+    background: $card-bg;
+    position: relative;
+    top: -11px;
+    z-index: 1;
 }
 
 #banner {

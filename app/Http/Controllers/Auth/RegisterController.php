@@ -78,7 +78,12 @@ class RegisterController extends Controller
         return $user;
     }
 
-    public function fromProvider(Request $request, $provider, $id) {
+    public function fromProvider(Request $request, $series, $provider, $id = null) {
+        if (empty($id)) {
+            $id = $provider;
+            $provider = $series;
+        }
+
         $this->ident = \App\UserIdentity::where(['provider' => $provider, 'identifier' => $id])->firstOrFail();
 
         return $this->register($request);
